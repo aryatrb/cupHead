@@ -1,17 +1,24 @@
 package com.example.cupHead.model;
 
 import javafx.scene.image.ImageView;
+import realController.GameController;
+import realController.SettingController;
 
-public class CupHead {
+import java.io.IOException;
+
+public class CupHead implements HealthyBeing {
     private final ImageView imageView;
-    private int health = 10;
+    private double health;
+    private final HealthBar healthBar;
 
-    public CupHead() {
-        imageView = new ImageView();
+    public CupHead(ImageView imageViewFX) {
+        imageView = imageViewFX;
         imageView.setFitWidth(109);
         imageView.setFitHeight(91);
         imageView.setX(90);
         imageView.setY(67);
+        health = SettingController.getDifficulty().getPrimitiveCupHeadHealth();
+        healthBar = new HealthBar(this, imageView);
     }
 
     public int getWidth() {
@@ -26,7 +33,28 @@ public class CupHead {
         return imageView;
     }
 
-    public void getDamage(Armament armament) {
+    public void getDamage(Armament armament) throws IOException {
         health -= armament.getCapableDamage();
+        if (health <= 0)
+            GameController.endTheGame(false);
+    }
+
+    @Override
+    public double greenBarPercent() {
+        return health / SettingController.getDifficulty().getPrimitiveCupHeadHealth();
+    }
+
+    @Override
+    public double blueBarPercent() {
+        return 1;
+    }
+
+    @Override
+    public String getHealthDigit() {
+        return health + "/" + SettingController.getDifficulty().getPrimitiveCupHeadHealth();
+    }
+
+    public double getHealth() {
+        return health;
     }
 }

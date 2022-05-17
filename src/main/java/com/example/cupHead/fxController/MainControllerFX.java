@@ -1,8 +1,8 @@
 package com.example.cupHead.fxController;
 
 import com.example.cupHead.ViewApplication;
+import com.example.cupHead.model.User;
 import javafx.fxml.FXML;
-import javafx.scene.media.MediaPlayer;
 
 import java.io.IOException;
 
@@ -19,6 +19,7 @@ public class MainControllerFX {
 
     @FXML
     public void scoreboard() throws IOException {
+        User.sort();
         ViewApplication.sceneChanger("scoreboard.fxml");
     }
 
@@ -26,5 +27,10 @@ public class MainControllerFX {
     public void newGame() throws IOException {
         ViewApplication.sceneChanger("gameMenu.fxml");
         ViewApplication.playMusic("gameMusic");
+    }
+
+    @FXML
+    public void setting() throws IOException {
+        ViewApplication.sceneChanger("settingMenu.fxml");
     }
 }

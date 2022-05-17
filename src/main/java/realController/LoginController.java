@@ -23,16 +23,6 @@ public class LoginController {
         return 0;
     }
 
-    public static int changePassword(String currentPassword,
-                                     String newPassword) {
-        if (!loggedUser.isPasswordCorrect(currentPassword))
-            return 1;
-        if (loggedUser.isPasswordCorrect(newPassword))
-            return 2;
-        loggedUser.changePassword(newPassword);
-        return 0;
-    }
-
     public static User getLoggedUser() {
         return loggedUser;
     }

@@ -8,12 +8,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Popup;
-import javafx.stage.Window;
 import realController.LoginController;
 import realController.ProfileController;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -26,37 +23,33 @@ public class ProfileControllerFX implements Initializable {
     private ImageView imageView;
 
     @FXML
-    public void changeUsername()
-    {
+    public void changeUsername() {
         Alert alert;
-        switch (ProfileController.changeUsername(newUsername.getText()))
-        {
-            case 0:
+        switch (ProfileController.changeUsername(newUsername.getText())) {
+            case 0 -> {
                 alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setHeaderText("what a shitty username");
                 alert.setContentText("username changed successfully");
                 alert.showAndWait();
-                break;
-            case 1:
+            }
+            case 1 -> {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Input not valid");
                 alert.setContentText("this username is already taken");
                 alert.showAndWait();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText("Input not valid");
                 alert.setContentText("actually there is no input");
                 alert.showAndWait();
-                break;
+            }
         }
     }
 
     @FXML
-    public void changePassword()
-    {
-        if(newPassword==null)
-        {
+    public void changePassword() {
+        if (ProfileController.changePassword(newPassword.toString()) == 1) {
             Alert errorAlert = new Alert(Alert.AlertType.ERROR);
             errorAlert.setHeaderText("Input not valid");
             errorAlert.setContentText("actually there is no input");
@@ -91,27 +84,24 @@ public class ProfileControllerFX implements Initializable {
     }
 
     @FXML
-    public void nextProfile()
-    {
+    public void nextProfile() {
         LoginController.getLoggedUser().changeProfile(true);
-        loadProfile(LoginController.getLoggedUser(),imageView);
+        loadProfile(LoginController.getLoggedUser(), imageView);
     }
 
     @FXML
-    public void lastProfile()
-    {
+    public void lastProfile() {
         LoginController.getLoggedUser().changeProfile(false);
-        loadProfile(LoginController.getLoggedUser(),imageView);
+        loadProfile(LoginController.getLoggedUser(), imageView);
     }
 
-    public static void loadProfile(User user,ImageView newImageView)
-    {
+    public static void loadProfile(User user, ImageView newImageView) {
         newImageView.setImage(new Image("com/example/assets/profilePictures/" +
                 user.getAvatarNumber() + ".png"));
     }
-    public void initialize(URL location, ResourceBundle resources)
-    {
-        loadProfile(LoginController.getLoggedUser(),imageView);
+
+    public void initialize(URL location, ResourceBundle resources) {
+        loadProfile(LoginController.getLoggedUser(), imageView);
     }
 }
 

@@ -17,4 +17,10 @@ module com.example.fx {
     opens com.example.assets.boss.bossShoot;
     opens com.example.assets.miniBoss.purple;
     opens com.example.assets.miniBoss.yellow;
+    opens com.example.assets.boss.phase2.shoot;
+    opens com.example.assets.boss.phase2.fly;
+    opens com.example.assets.backgrounds;
+    opens com.example.assets.music;
+    opens com.example.assets.healthBar;
+    opens com.example.assets.cupHead;
 }

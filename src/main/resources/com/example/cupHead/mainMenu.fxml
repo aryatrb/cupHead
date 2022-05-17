@@ -12,7 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
+<VBox maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0"
       prefWidth="1280.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.cupHead.fxController.MainControllerFX">
     <MenuBar VBox.vgrow="NEVER">
@@ -54,13 +55,19 @@
             </font>
         </Label>
         <ImageView fitHeight="778.0" fitWidth="1280.0">
-            <Image url="@../assets/mainBackground.png"/>
+            <Image url="@../assets/backgrounds/mainBackground.png"/>
         </ImageView>
-        <Button layoutX="603.0" layoutY="574.0" mnemonicParsing="false" text="new game" onAction="#newGame"/>
-        <Button layoutX="592.0" layoutY="613.0" mnemonicParsing="false" text="resume game"/>
-        <Button layoutX="613.0" layoutY="652.0" mnemonicParsing="false" text="profile" onAction="#profile"/>
-        <Button layoutX="614.0" layoutY="691.0" mnemonicParsing="false" text="setting"/>
-        <Button layoutX="20.0" layoutY="691.0" mnemonicParsing="false" text="scoreboard" onAction="#scoreboard"/>
-        <Button layoutX="1212.0" layoutY="14.0" mnemonicParsing="false" text="exit" onAction="#exit"/>
+        <Button layoutX="603.0" layoutY="574.0"
+                mnemonicParsing="false" text="new game" onAction="#newGame"/>
+        <Button layoutX="592.0" layoutY="613.0"
+                mnemonicParsing="false" text="resume game"/>
+        <Button layoutX="613.0" layoutY="652.0"
+                mnemonicParsing="false" text="profile" onAction="#profile"/>
+        <Button layoutX="614.0" layoutY="691.0"
+                mnemonicParsing="false" text="setting" onAction="#setting"/>
+        <Button layoutX="20.0" layoutY="691.0"
+                mnemonicParsing="false" text="scoreboard" onAction="#scoreboard"/>
+        <Button layoutX="1212.0" layoutY="14.0"
+                mnemonicParsing="false" text="exit" onAction="#exit"/>
     </AnchorPane>
 </VBox>

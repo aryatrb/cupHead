@@ -5,8 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import realController.GameController;
+import realController.SettingController;
 
-public class Egg extends Transition implements Armament{
+import java.io.IOException;
+
+public class Egg extends Transition implements Armament {
     private final ImageView imageView;
 
     public Egg(double positionX, double positionY) {
@@ -23,24 +26,31 @@ public class Egg extends Transition implements Armament{
     }
 
     @Override
-    public int getCapableDamage() {
-        return 1;
+    public double getCapableDamage() {
+        return 1 * SettingController.getDifficulty()
+                .getGettingDamagedCoefficient();
     }
 
     @Override
-    public int getSpeed() {
+    public double getSpeed() {
         return 10;
     }
 
     @Override
     protected void interpolate(double v) {
         imageView.setX(imageView.getX() - getSpeed());
-        if (GameController.intersects(imageView, GameController.getCupHead().getImageView())) {
-            GameController.getCupHead().getDamage(this);
+        if (GameController.intersects(imageView,
+                GameController.getCupHead().getImageView(),
+                null) && GameController.getBlips() == 0) {
+            try {
+                GameController.getCupHead().getDamage(this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             GameController.deleteEgg(this);
             return;
         }
-        if (imageView.getX() <0)
+        if (imageView.getX() < 0)
             GameController.deleteEgg(this);
     }
 

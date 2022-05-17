@@ -1,7 +1,7 @@
 package com.example.cupHead.model;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import javafx.scene.image.Image;
 import realController.LoginController;
 
 import java.io.FileWriter;
@@ -18,6 +18,7 @@ public class User {
     private int score;
     private int avatarNumber;
     private int time;
+
     static {
         try {
             String json = new String(Files.readAllBytes(Paths.get("dataBase/users.json")));
@@ -45,7 +46,7 @@ public class User {
     }
 
     public static User findUser(String string) {
-        if(listOfUsers==null)
+        if (listOfUsers == null)
             return null;
         for (User listOfUser : listOfUsers)
             if (Objects.equals(listOfUser.username, string))
@@ -56,10 +57,10 @@ public class User {
     public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.score=0;
-        time=0;
+        this.score = 0;
+        time = 0;
         Random random = new Random();
-        this.avatarNumber = random.nextInt(sizeOfAvatars-1);
+        this.avatarNumber = random.nextInt(sizeOfAvatars - 1);
         listOfUsers.add(this);
         saveData();
     }
@@ -72,8 +73,8 @@ public class User {
         this.password = newPassword;
         saveData();
     }
-    public void deleteAccount()
-    {
+
+    public void deleteAccount() {
         listOfUsers.remove(LoginController.getLoggedUser());
         saveData();
     }
@@ -82,26 +83,26 @@ public class User {
         return avatarNumber;
     }
 
-    public void changeProfile(boolean isNext)
-    {
-        int next =-1;
-        if(isNext)
-            next=1;
-        avatarNumber = (avatarNumber+next)%sizeOfAvatars;
-        if(avatarNumber<0)
-            avatarNumber+=sizeOfAvatars;
+    public void changeProfile(boolean isNext) {
+        int next = -1;
+        if (isNext)
+            next = 1;
+        avatarNumber = (avatarNumber + next) % sizeOfAvatars;
+        if (avatarNumber < 0)
+            avatarNumber += sizeOfAvatars;
     }
-    public void sort()
-    {
+
+    public static void sort() {
         listOfUsers.sort(new scoreCompare());
     }
-    public static class scoreCompare implements Comparator<User>{
+
+    public static class scoreCompare implements Comparator<User> {
 
         @Override
         public int compare(User o1, User o2) {
-            if(o1.score>o2.score)
+            if (o1.score < o2.score)
                 return 1;
-            if(o1.score<o2.score)
+            if (o1.score > o2.score)
                 return -1;
             return Integer.compare(o1.time, o2.time);
         }
@@ -121,5 +122,13 @@ public class User {
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 }
