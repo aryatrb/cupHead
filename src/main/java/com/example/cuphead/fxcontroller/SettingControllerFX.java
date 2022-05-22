@@ -2,9 +2,11 @@ package com.example.cuphead.fxcontroller;
 
 import com.example.cuphead.ViewApplication;
 import com.example.cuphead.model.Difficulty;
+import com.example.cuphead.realcontroller.GameController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import com.example.cuphead.realcontroller.SettingController;
 
@@ -14,7 +16,7 @@ import java.util.ResourceBundle;
 
 public class SettingControllerFX implements Initializable {
     @FXML
-    Text currentDifficultyText,
+    Text currentDifficultyText, bWText,
             primitiveCupHeadHealthText,
             gettingDamagedCoefficientText,
             makingDamageCoefficientText,
@@ -22,6 +24,9 @@ public class SettingControllerFX implements Initializable {
 
     @FXML
     Button easyButton, normalButton, hardButton;
+
+    @FXML
+    Pane pane;
 
     @FXML
     public void mainMenu() throws IOException {
@@ -59,11 +64,21 @@ public class SettingControllerFX implements Initializable {
         setSoundText();
     }
 
+    @FXML
+    public void BWButton() {
+        SettingController.setIsBW(!SettingController.isIsBW());
+        setBWText();
+        SettingController.setEffect(pane);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setDevilModeText();
         updateDifficultyTexts();
         setSoundText();
+        setBWText();
+        GameController.setPane(pane);
+        SettingController.setEffect(pane);
     }
 
     private void setDevilModeText() {
@@ -75,6 +90,7 @@ public class SettingControllerFX implements Initializable {
             condition = "ON";
             opacity = 0.5;
             bool = true;
+            SettingController.setDifficulty(Difficulty.noHead);
         } else {
             condition = "OFF";
             opacity = 1;
@@ -88,7 +104,6 @@ public class SettingControllerFX implements Initializable {
         easyButton.setDisable(bool);
         normalButton.setDisable(bool);
         hardButton.setDisable(bool);
-        SettingController.setDifficulty(Difficulty.noHead);
         updateDifficultyTexts();
     }
 
@@ -97,6 +112,13 @@ public class SettingControllerFX implements Initializable {
         if (SettingController.isIsSoundOn())
             soundText.setText(string + "ON");
         else soundText.setText(string + "OFF");
+    }
+
+    private void setBWText() {
+        String string = "Black and White: ";
+        if (SettingController.isIsBW())
+            bWText.setText(string + "ON");
+        else bWText.setText(string + "OFF");
     }
 
     private void setCurrentDifficultyText() {

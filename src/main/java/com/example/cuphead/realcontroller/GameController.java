@@ -5,10 +5,6 @@ import com.example.cuphead.fxcontroller.GameMenuControllerFX;
 import com.example.cuphead.model.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,10 +12,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class GameController {
-    private static Timer timerToBuildMiniBoss = new Timer();
     private static final ArrayList<Bullet> BULLETS = new ArrayList<>();
     private static final ArrayList<MiniBoss> miniBosses = new ArrayList<>();
     private static final ArrayList<Egg> EGGS = new ArrayList<>();
+    private static Timer timerToBuildMiniBoss = new Timer();
     private static CupHead cupHead;
     private static Pane pane;
     private static Boss boss;
@@ -63,9 +59,6 @@ public class GameController {
                 (int) cupHead.getImageView().getY() +
                         random.nextInt(cupHead.getHeight()));
         BULLETS.add(bullet);
-//        MediaPlayer mediaPlayer = new MediaPlayer(Bullet.getMedia());
-//        mediaPlayer.play();
-//        mediaPlayer.setVolume(0.3);
         return true;
     }
 
@@ -175,7 +168,11 @@ public class GameController {
         if (end != 0)
             return;
         if (didWin)
+        {
             score += cupHead.getHealth() * 100 + 10000;
+            if(boss.getPhase()==3)
+                score += cupHead.getHealth() * 100 + 10000;
+        }
         else
             score += (1000 - boss.getHealth()) * 0.6;
         end = System.currentTimeMillis();
@@ -210,6 +207,12 @@ public class GameController {
 
     public static void setTimerToBuildMiniBoss(Timer timerToBuildMiniBoss) {
         GameController.timerToBuildMiniBoss = timerToBuildMiniBoss;
+    }
+
+    public static String getTimerText()
+    {
+        long time = (System.currentTimeMillis() - start)/1000;
+        return String.format("%02d", (int)time/60) + ":" + String.format("%02d", (int)time%60);
     }
 
     public static void setPane(Pane pane) {

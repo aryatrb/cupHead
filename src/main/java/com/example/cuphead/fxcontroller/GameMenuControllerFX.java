@@ -2,6 +2,7 @@ package com.example.cuphead.fxcontroller;
 
 import com.example.cuphead.model.Boss;
 import com.example.cuphead.model.CupHead;
+import com.example.cuphead.realcontroller.SettingController;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -10,6 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import com.example.cuphead.realcontroller.GameController;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -31,6 +35,7 @@ public class GameMenuControllerFX implements Initializable {
     private ImageView background, cupHeadImage, bossImage;
 
     private static AnimationTimer animationTimer;
+    private Text timerText = new Text();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,12 +72,19 @@ public class GameMenuControllerFX implements Initializable {
         GameController.setEnd(0);
         Arrays.fill(secondKeys, false);
         GameController.setPane(pane);
+        SettingController.setEffect(pane);
         GameController.setCupHead(new CupHead(cupHeadImage));
         GameController.setBoss(new Boss());
         bossImage = GameController.getBoss().getImageView();
         pane.getChildren().add(bossImage);
         updateCupHeadPosition();
         GameController.setStart(System.currentTimeMillis());
+        timerText.setText(GameController.getTimerText());
+        timerText.setX(10);
+        timerText.setY(GameController.getWindowHeight()*0.97);
+        timerText.setFill(Paint.valueOf("WHITE"));
+        timerText.setFont(new Font(57));
+        pane.getChildren().add(timerText);
     }
 
     private void makeAnimationTimer() {
@@ -82,6 +94,7 @@ public class GameMenuControllerFX implements Initializable {
                 background.setX((background.getX() - 5));
                 if (background.getX() <= -3645.9354)
                     background.setX(0);
+                timerText.setText(GameController.getTimerText());
                 bossImage.setImage(GameController.getBoss().getImageView().getImage());
                 if (GameController.getCupHead().getHealth() <= 0) {
                     try {

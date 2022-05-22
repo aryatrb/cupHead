@@ -31,7 +31,7 @@ public class Egg extends Transition implements Armament {
         imageView.setFitWidth(50);
         isHorizontal= GameController.getBoss().getPhase() != 3;
         if(!isHorizontal)
-            imageView.setX(imageView.getX() + GameController.getBoss().getImageView().getFitWidth() * 0.6221);
+            imageView.setX(imageView.getX() + GameController.getBoss().getImageView().getFitWidth() * 0.69);
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
         this.play();

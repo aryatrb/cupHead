@@ -1,8 +1,10 @@
 package com.example.cuphead.fxcontroller;
 
 import com.example.cuphead.ViewApplication;
+import com.example.cuphead.realcontroller.SettingController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import com.example.cuphead.realcontroller.GameController;
 
@@ -13,6 +15,9 @@ import java.util.ResourceBundle;
 public class GameEndControllerFX implements Initializable {
     @FXML
     Text time, score;
+
+    @FXML
+    Pane pane;
 
     @FXML
     public void backToMenu() throws IOException {
@@ -35,5 +40,7 @@ public class GameEndControllerFX implements Initializable {
         score.setText("Score: " + GameController.getScore());
         score.setX(score.getX() - score.getLayoutBounds().getWidth() / 2
                 + GameController.getWindowWidth() * 0.03);
+        GameController.setPane(pane);
+        SettingController.setEffect(pane);
     }
 }

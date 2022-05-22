@@ -1,15 +1,24 @@
 package com.example.cuphead.fxcontroller;
 
 import com.example.cuphead.ViewApplication;
+import com.example.cuphead.realcontroller.GameController;
+import com.example.cuphead.realcontroller.SettingController;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginControllerFX {
+public class LoginControllerFX implements Initializable {
     @FXML
     private TextField username, password;
+
+    @FXML
+    Pane pane;
 
     @FXML
     private void register() {
@@ -40,5 +49,11 @@ public class LoginControllerFX {
             errorAlert.setContentText("username or password is incorrect");
             errorAlert.showAndWait();
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        GameController.setPane(pane);
+        SettingController.setEffect(pane);
     }
 }

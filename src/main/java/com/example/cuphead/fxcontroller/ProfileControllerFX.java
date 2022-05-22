@@ -1,6 +1,8 @@
 package com.example.cuphead.fxcontroller;
 
 import com.example.cuphead.ViewApplication;
+import com.example.cuphead.realcontroller.GameController;
+import com.example.cuphead.realcontroller.SettingController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -9,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import com.example.cuphead.realcontroller.LoginController;
 import com.example.cuphead.realcontroller.ProfileController;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +23,9 @@ public class ProfileControllerFX implements Initializable {
 
     @FXML
     private ImageView imageView;
+
+    @FXML
+    Pane pane;
 
     @FXML
     public void changeUsername() {
@@ -101,6 +107,8 @@ public class ProfileControllerFX implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         loadProfile(LoginController.getLoggedUser().getAvatarNumber(), imageView);
+        GameController.setPane(pane);
+        SettingController.setEffect(pane);
     }
 }
 

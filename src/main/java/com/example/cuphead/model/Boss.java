@@ -103,6 +103,8 @@ public class Boss extends Transition implements Armament, HealthyBeing {
 
     @Override
     public double getCapableDamage() {
+        System.out.println(SettingController.getDifficulty()
+                .getGettingDamagedCoefficient());
         return 1 * SettingController.getDifficulty()
                 .getGettingDamagedCoefficient();
     }
@@ -141,7 +143,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
                     imageView.getFitHeight() / 2 - imageView.getY();
             double xDouble = GameController.getCupHead().getImageView().getX() +
                     GameController.getCupHead().getImageView().getFitWidth() / 2 -
-                    imageView.getFitWidth() * 0.6221 - imageView.getX();
+                    imageView.getFitWidth() * 0.69 - imageView.getX();
             if ((!isX && Math.abs(yDouble) > 10) ||
                     (phase == 3 && Math.abs(xDouble) > 8)) {
                 if ((!isX && yDouble < 0) ||
@@ -182,7 +184,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
                 (phase == 3 && !isShooting &&
                         Math.abs(GameController.getCupHead().getImageView().getX() +
                                 GameController.getCupHead().getImageView().getFitWidth() / 2
-                                - imageView.getX() - imageView.getFitWidth() * 0.6221) < 50)) {
+                                - imageView.getX() - imageView.getFitWidth() * 0.69) < 50)) {
             isShooting = true;
             shootCycle = -1;
             if (phase != 2)
@@ -278,12 +280,12 @@ public class Boss extends Transition implements Armament, HealthyBeing {
             imageView.setY(800 - imageView.getFitHeight() / 2);
         if ((imageView.getX() < GameController.getWindowWidth() * 3 / 5 && phase != 3))
             imageView.setX(GameController.getWindowWidth() * 3 / 5);
-        if (imageView.getX() + imageView.getFitWidth() * 0.6221 < 0 && phase == 3)
-            imageView.setX(-imageView.getFitWidth() * 0.6221);
+        if (imageView.getX() + imageView.getFitWidth() * 0.69 < 0 && phase == 3)
+            imageView.setX(-imageView.getFitWidth() * 0.69);
         if (imageView.getX() > 1280 - imageView.getFitWidth() && phase != 3)
             imageView.setX(1280 - imageView.getFitWidth());
-        if (imageView.getX() + imageView.getFitWidth() * 0.6221 > 1280)
-            imageView.setX(1280 - imageView.getFitWidth() * 0.6221);
+        if (imageView.getX() + imageView.getFitWidth() * 0.69 > 1280)
+            imageView.setX(1280 - imageView.getFitWidth() * 0.69);
 
     }
 

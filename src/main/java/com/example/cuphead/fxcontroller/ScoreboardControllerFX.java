@@ -2,9 +2,12 @@ package com.example.cuphead.fxcontroller;
 
 import com.example.cuphead.ViewApplication;
 import com.example.cuphead.model.User;
+import com.example.cuphead.realcontroller.GameController;
+import com.example.cuphead.realcontroller.SettingController;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
@@ -18,6 +21,9 @@ public class ScoreboardControllerFX implements Initializable {
     @FXML
     private Text text0, text1, text2, text3, text4,
             text5, text6, text7, text8, text9;
+
+    @FXML
+    Pane pane;
 
     @FXML
     public void mainMenu() throws IOException {
@@ -42,7 +48,8 @@ public class ScoreboardControllerFX implements Initializable {
         text7.setText(getDetails(7));
         text8.setText(getDetails(8));
         text9.setText(getDetails(9));
-
+        GameController.setPane(pane);
+        SettingController.setEffect(pane);
     }
 
     private String getDetails(int i) {
