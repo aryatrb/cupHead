@@ -22,13 +22,13 @@ public class GameEndControllerFX implements Initializable {
     @FXML
     public void backToMenu() throws IOException {
         ViewApplication.sceneChanger("mainMenu.fxml");
-        ViewApplication.playMusic("menuMusic");
+        SettingController.playMusic("menuMusic");
     }
 
     @FXML
     public void replay() throws IOException {
         ViewApplication.sceneChanger("gameMenu.fxml");
-        ViewApplication.playMusic("gameMusic");
+        SettingController.playMusic("gameMusic");
     }
 
     @Override

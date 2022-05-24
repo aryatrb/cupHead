@@ -1,6 +1,5 @@
 package com.example.cuphead.model;
 
-import com.example.cuphead.ViewApplication;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,7 +19,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private static final Image[] SHOOT_IMAGES_PHASE_ONE = new Image[12];
     private static final Image[] SHOOT_IMAGES_PHASE_TWO = new Image[20];
     private static final Image[] SHOOT_IMAGES_PHASE_THREE = new Image[16];
-    private final ImageView imageView;
+    private static ImageView imageView = null;
     private final HealthBar healthBar;
     private double health = 1000;
     private double secondHealth = 750;
@@ -53,21 +52,21 @@ public class Boss extends Transition implements Armament, HealthyBeing {
                     (i + 1) + ".png");
     }
 
-    public Boss() {
+    public Boss(ImageView imageView) {
         frame = 0;
         isShooting = false;
         imageFlyNum = 0;
         shootCycle = -1;
         moveCycleY = 0;
-        imageView = new ImageView();
-        imageView.setFitHeight(329);
-        imageView.setFitWidth(517.1854);
-        imageView.setX(851);
-        imageView.setY(36);
-        imageView.setImage(FLY_IMAGES_PHASE_ONE[imageFlyNum]);
-        imageView.preserveRatioProperty();
-        imageView.pickOnBoundsProperty();
-        healthBar = new HealthBar(this, imageView, false);
+        Boss.imageView = imageView;
+        Boss.imageView.setFitHeight(329);
+        Boss.imageView.setFitWidth(517.1854);
+        Boss.imageView.setX(851);
+        Boss.imageView.setY(36);
+        Boss.imageView.setImage(FLY_IMAGES_PHASE_ONE[imageFlyNum]);
+//        imageView.preserveRatioProperty();
+//        imageView.pickOnBoundsProperty();
+        healthBar = new HealthBar(this, Boss.imageView, false);
         phase = 1;
         this.setCycleDuration(Duration.seconds(40));
         this.setCycleCount(-1);
@@ -126,7 +125,8 @@ public class Boss extends Transition implements Armament, HealthyBeing {
 
     @Override
     public String getHealthDigit() {
-        return health + "/1000" + " | " + secondHealth + "/" + 750;
+        return health + "/" + 1000 + " | " +
+                secondHealth + "/" + 750;
     }
 
     public void moveNAxis(Random random, boolean isX) {
@@ -213,7 +213,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private void playSound() {
         if (Egg.getAudioClip().isPlaying())
             Egg.getAudioClip().stop();
-        if (!ViewApplication.getMediaPlayer().isMute())
+        if (!SettingController.getMediaPlayer().isMute())
             Egg.getAudioClip().play();
     }
 
@@ -236,7 +236,8 @@ public class Boss extends Transition implements Armament, HealthyBeing {
         double healthBefore = health;
         if (health > 0) {
             health -= armament.getCapableDamage();
-            if (SettingController.isDevilMode() && health < 500 && healthBefore >= 500) {
+            if (SettingController.isDevilMode() && health < 500 &&
+                    healthBefore >= 500) {
                 phase = 2;
                 imageFlyNum = 0;
                 shootCycle = 0;
@@ -276,17 +277,16 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private void fixCoordinateFaults() {
         if (imageView.getY() < -60)
             imageView.setY(-60);
-        if (imageView.getY() > 800 - imageView.getFitHeight() / 2)
-            imageView.setY(800 - imageView.getFitHeight() / 2);
+        if (imageView.getY() > GameController.getWindowHeight() - imageView.getFitHeight() / 2)
+            imageView.setY(GameController.getWindowHeight() - imageView.getFitHeight() / 2);
         if ((imageView.getX() < GameController.getWindowWidth() * 3 / 5 && phase != 3))
             imageView.setX(GameController.getWindowWidth() * 3 / 5);
         if (imageView.getX() + imageView.getFitWidth() * 0.69 < 0 && phase == 3)
             imageView.setX(-imageView.getFitWidth() * 0.69);
-        if (imageView.getX() > 1280 - imageView.getFitWidth() && phase != 3)
-            imageView.setX(1280 - imageView.getFitWidth());
-        if (imageView.getX() + imageView.getFitWidth() * 0.69 > 1280)
-            imageView.setX(1280 - imageView.getFitWidth() * 0.69);
-
+        if (imageView.getX() > GameController.getWindowWidth() - imageView.getFitWidth() && phase != 3)
+            imageView.setX(GameController.getWindowWidth() - imageView.getFitWidth());
+        if (imageView.getX() + imageView.getFitWidth() * 0.69 > GameController.getWindowWidth())
+            imageView.setX(GameController.getWindowWidth() - imageView.getFitWidth() * 0.69);
     }
 
     private void crashWithCupHead() {

@@ -3,20 +3,14 @@ package com.example.cuphead.model;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import com.example.cuphead.realcontroller.GameController;
 import com.example.cuphead.realcontroller.SettingController;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Bullet extends Transition implements Armament {
     private final static Image IMAGE = new Image("com/example/assets/bullet/bullet.png");
-    private final static Media media = new Media(
-            new File("src/main/resources/com/example/assets/music/shootSound.wav")
-                    .toURI().toString());
     private final ImageView imageView;
 
     public Bullet(int positionX, int positionY) {
@@ -33,13 +27,23 @@ public class Bullet extends Transition implements Armament {
 
     @Override
     protected void interpolate(double v) {
-        imageView.setX(imageView.getX() + getSpeed());
+        for (int i = 0; i < getSpeed(); i+=2) {
+            imageView.setX(imageView.getX() + 2);
+            if (intersectBoss())
+                return;
+        }
         if (intersectBoss())
             return;
         if (intersectMiniBoss())
-            return;
-        if (imageView.getX() > GameController.getWindowWidth())
+        {
             GameController.deleteBullet(this);
+            return;
+        }
+        if (imageView.getX() > GameController.getWindowWidth())
+        {
+            GameController.deleteBullet(this);
+            return;
+        }
     }
 
     @Override
@@ -82,8 +86,4 @@ public class Bullet extends Transition implements Armament {
         return imageView;
     }
 
-
-    public static Media getMedia() {
-        return media;
-    }
 }

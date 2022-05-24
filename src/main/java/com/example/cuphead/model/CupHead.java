@@ -5,6 +5,8 @@ import com.example.cuphead.realcontroller.GameController;
 import com.example.cuphead.realcontroller.SettingController;
 
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CupHead implements HealthyBeing {
     private final ImageView imageView;
@@ -16,7 +18,7 @@ public class CupHead implements HealthyBeing {
         imageView.setFitWidth(109);
         imageView.setFitHeight(91);
         imageView.setX(90);
-        imageView.setY(67);
+        imageView.setY(100);
         health = SettingController.getDifficulty().getPrimitiveCupHeadHealth();
         healthBar = new HealthBar(this, imageView, true);
     }
@@ -38,9 +40,18 @@ public class CupHead implements HealthyBeing {
     }
 
     public void getDamage(Armament armament) throws IOException {
+        if(GameController.getBlips()!=0)
+            return;
         health -= armament.getCapableDamage();
         if (health <= 0)
             GameController.endTheGame(false);
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                GameController.blip(timer);
+            }
+        }, 200, 400);
     }
 
     public int getWidth() {

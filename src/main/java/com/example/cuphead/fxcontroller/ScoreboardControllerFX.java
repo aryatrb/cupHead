@@ -33,11 +33,14 @@ public class ScoreboardControllerFX implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ProfileControllerFX.loadProfile(User
-                .getListOfUsers().get(0).getAvatarNumber(), firstPP);
+                .getListOfUsers().get(0).getAvatarNumber(),
+                firstPP);
         ProfileControllerFX.loadProfile(User
-                .getListOfUsers().get(1).getAvatarNumber(), secondPP);
+                .getListOfUsers().get(1).getAvatarNumber(),
+                secondPP);
         ProfileControllerFX.loadProfile(User
-                .getListOfUsers().get(2).getAvatarNumber(), thirdPP);
+                .getListOfUsers().get(2).getAvatarNumber(),
+                thirdPP);
         text0.setText(getDetails(0));
         text1.setText(getDetails(1));
         text2.setText(getDetails(2));
@@ -58,7 +61,9 @@ public class ScoreboardControllerFX implements Initializable {
             rank = "#0" + (i + 1);
         else
             rank = "#" + (i + 1);
-        return rank + ". " + User.getListOfUsers().get(i).getUsername() + " | score: " +
-                User.getListOfUsers().get(i).getScore() + " | time: " + User.getListOfUsers().get(i).getTime();
+        return rank + ". " +
+                User.getListOfUsers().get(i).getUsername() + " | score: " +
+                User.getListOfUsers().get(i).getScore() + " | time: " +
+                User.getListOfUsers().get(i).getTime();
     }
 }

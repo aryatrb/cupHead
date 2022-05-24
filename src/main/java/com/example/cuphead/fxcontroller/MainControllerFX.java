@@ -35,7 +35,7 @@ public class MainControllerFX implements Initializable {
     @FXML
     public void newGame() throws IOException {
         ViewApplication.sceneChanger("gameMenu.fxml");
-        ViewApplication.playMusic("gameMusic");
+        SettingController.playMusic("gameMusic");
     }
 
     @FXML

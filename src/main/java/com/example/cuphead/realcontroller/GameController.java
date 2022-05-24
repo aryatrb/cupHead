@@ -5,6 +5,7 @@ import com.example.cuphead.fxcontroller.GameMenuControllerFX;
 import com.example.cuphead.model.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -39,12 +40,12 @@ public class GameController {
         }
         if (cupHead.getImageView().getX() < 0)
             cupHead.getImageView().setX(0);
-        if (cupHead.getImageView().getX() > 1280 - cupHead.getWidth())
-            cupHead.getImageView().setX(1280 - cupHead.getWidth());
+        if (cupHead.getImageView().getX() > GameController.getWindowWidth() - cupHead.getWidth())
+            cupHead.getImageView().setX(GameController.getWindowWidth() - cupHead.getWidth());
         if (cupHead.getImageView().getY() < 25)
             cupHead.getImageView().setY(25);
-        if (cupHead.getImageView().getY() > 800 - cupHead.getHeight())
-            cupHead.getImageView().setY(800 - cupHead.getHeight());
+        if (cupHead.getImageView().getY() > GameController.getWindowHeight() - cupHead.getHeight())
+            cupHead.getImageView().setY(GameController.getWindowHeight() - cupHead.getHeight());
     }
 
     public static boolean shootBullets(boolean isForced) {
@@ -81,7 +82,6 @@ public class GameController {
         pane.getChildren().add(miniBoss3.getImageView());
     }
 
-
     public static void blip(Timer timer) {
         blips++;
         if (blips == 3)
@@ -94,7 +94,7 @@ public class GameController {
             public void run() {
                 GameController.unBlip(timer2);
             }
-        }, 200, 400);
+        }, 300, 600);
     }
 
     public static void unBlip(Timer timer) {
@@ -130,6 +130,35 @@ public class GameController {
         miniBoss.getHealthBar().getGreenBar().setImage(null);
         miniBoss.getHealthBar().getBlueBar().setImage(null);
     }
+
+//    public static boolean intersects2(ImageView imageView1, ImageView imageView2) {
+//        imageView2.setOpacity(1);
+//        if (imageView1.getImage() == null)
+//            return false;
+//        for (int i = (int)imageView1.getFitWidth()-1; i >=0; i--)
+//            for (int j = (int) imageView1.getFitHeight()-1; j >=0; j--) {
+//                if (imageView1.getImage().getPixelReader().getColor(i, j).getOpacity() == 0)
+//                    continue;
+//                int wx = (int) (imageView1.getX() + i - imageView2.getX());
+//                int wy = (int) (imageView1.getY() + j - imageView2.getY());
+//                if (wx < 0 ||
+//                        wx >= imageView2.getFitWidth() ||
+//                        wy < 0 ||
+//                        wy >= imageView2.getFitHeight())
+//                    continue;
+//                double op = imageView2.getImage().getPixelReader().getColor(wx, wy).getOpacity();
+//                if(wx>155)
+//                    System.out.println(165);
+//                System.out.println("wx: " + wx + " wy: " + wy + " op: " + op + " i: " + i + " j: " + j + " img1x: " +
+//                        imageView1.getX() + " img2x: " + imageView2.getX() + " img1y: " + imageView1.getY() + " img2y: " + imageView2.getY() + "w1: " + imageView1.getFitWidth());
+//                if (op != 0) {
+//                    System.out.println("done");
+//                    return true;
+//                }
+//            }
+//        System.out.println();
+//        return false;
+//    }
 
     public static boolean intersects(ImageView imageView1,
                                      ImageView imageView2,
@@ -167,15 +196,19 @@ public class GameController {
     public static void endTheGame(boolean didWin) throws IOException {
         if (end != 0)
             return;
-        if (didWin)
-        {
-            score += cupHead.getHealth() * 100 + 10000;
-            if(boss.getPhase()==3)
-                score += cupHead.getHealth() * 100 + 10000;
-        }
-        else
-            score += (1000 - boss.getHealth()) * 0.6;
         end = System.currentTimeMillis();
+        if (didWin) {
+            score += cupHead.getHealth() * 100 + 10000;
+            if (boss.getPhase() == 3)
+                score += cupHead.getHealth() * 100 + 10000;
+            int seconds = (int) (end - start) / 1000;
+            for (int i = 10; i > 0; i--)
+                if (seconds < 1100 - 100 * i) {
+                    score += (1100 - 100 * i - seconds) * i;
+                    break;
+                }
+        } else
+            score += (1000 - boss.getHealth()) * 0.6;
         if (LoginController.getLoggedUser().getScore() < score) {
             LoginController.getLoggedUser().setScore(score);
             LoginController.getLoggedUser().setTime((GameController.getEnd() - GameController.getStart()) / 1000);
@@ -209,10 +242,9 @@ public class GameController {
         GameController.timerToBuildMiniBoss = timerToBuildMiniBoss;
     }
 
-    public static String getTimerText()
-    {
-        long time = (System.currentTimeMillis() - start)/1000;
-        return String.format("%02d", (int)time/60) + ":" + String.format("%02d", (int)time%60);
+    public static String getTimerText() {
+        long time = (System.currentTimeMillis() - start) / 1000;
+        return String.format("%02d", (int) time / 60) + ":" + String.format("%02d", (int) time % 60);
     }
 
     public static void setPane(Pane pane) {

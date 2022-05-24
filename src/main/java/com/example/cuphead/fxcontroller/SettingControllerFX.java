@@ -60,14 +60,14 @@ public class SettingControllerFX implements Initializable {
     @FXML
     public void soundButton() {
         SettingController.setIsSoundOn(!SettingController.isIsSoundOn());
-        ViewApplication.getMediaPlayer().setMute(!SettingController.isIsSoundOn());
-        setSoundText();
+        SettingController.getMediaPlayer().setMute(!SettingController.isIsSoundOn());
+        setOnOffText(soundText, "Sound: ", SettingController.isIsSoundOn());
     }
 
     @FXML
     public void BWButton() {
         SettingController.setIsBW(!SettingController.isIsBW());
-        setBWText();
+        setOnOffText(bWText, "Black and White: ", SettingController.isIsBW());
         SettingController.setEffect(pane);
     }
 
@@ -75,8 +75,8 @@ public class SettingControllerFX implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setDevilModeText();
         updateDifficultyTexts();
-        setSoundText();
-        setBWText();
+        setOnOffText(soundText, "Sound: ", SettingController.isIsBW());
+        setOnOffText(bWText, "Black and White: ", SettingController.isIsBW());
         GameController.setPane(pane);
         SettingController.setEffect(pane);
     }
@@ -107,61 +107,24 @@ public class SettingControllerFX implements Initializable {
         updateDifficultyTexts();
     }
 
-    private void setSoundText() {
-        String string = "Sound: ";
-        if (SettingController.isIsSoundOn())
-            soundText.setText(string + "ON");
-        else soundText.setText(string + "OFF");
+    private void setOnOffText(Text text, String string, boolean bool) {
+        if (bool)
+            text.setText(string + "ON");
+        else text.setText(string + "OFF");
     }
 
-    private void setBWText() {
-        String string = "Black and White: ";
-        if (SettingController.isIsBW())
-            bWText.setText(string + "ON");
-        else bWText.setText(string + "OFF");
-    }
-
-    private void setCurrentDifficultyText() {
-        String string = "Current Difficulty: ";
+    private void setText(Text text, String string, String percent1, String percent2, String percent3) {
         if (SettingController.getDifficulty() == Difficulty.cupHead)
-            currentDifficultyText.setText(string + "Cup-Head");
+            text.setText(string + percent1);
         else if (SettingController.getDifficulty() == Difficulty.plasticHead)
-            currentDifficultyText.setText(string + "PlasticCup-Head");
-        else currentDifficultyText.setText(string + "No-Head");
-    }
-
-    private void setPrimitiveCupHeadHealthText() {
-        String string = "PrimitiveCupHeadHealth: ";
-        if (SettingController.getDifficulty() == Difficulty.cupHead)
-            primitiveCupHeadHealthText.setText(string + "10");
-        else if (SettingController.getDifficulty() == Difficulty.plasticHead)
-            primitiveCupHeadHealthText.setText(string + "5");
-        else primitiveCupHeadHealthText.setText(string + "2");
-    }
-
-    private void setGettingDamagedCoefficientText() {
-        String string = "GettingDamagedCoefficient: ";
-        if (SettingController.getDifficulty() == Difficulty.cupHead)
-            gettingDamagedCoefficientText.setText(string + "50%");
-        else if (SettingController.getDifficulty() == Difficulty.plasticHead)
-            gettingDamagedCoefficientText.setText(string + "100%");
-        else
-            gettingDamagedCoefficientText.setText(string + "150%");
-    }
-
-    private void setMakingDamageCoefficientText() {
-        String string = "MakingDamageCoefficient: ";
-        if (SettingController.getDifficulty() == Difficulty.cupHead)
-            makingDamageCoefficientText.setText(string + "150%");
-        else if (SettingController.getDifficulty() == Difficulty.plasticHead)
-            makingDamageCoefficientText.setText(string + "100%");
-        else makingDamageCoefficientText.setText(string + "50%");
+            text.setText(string + percent2);
+        else text.setText(string + percent3);
     }
 
     private void updateDifficultyTexts() {
-        setCurrentDifficultyText();
-        setPrimitiveCupHeadHealthText();
-        setGettingDamagedCoefficientText();
-        setMakingDamageCoefficientText();
+        setText(currentDifficultyText, "Current Difficulty: ", "Cup-Head", "PlasticCup-Head", "No-Head");
+        setText(primitiveCupHeadHealthText, "PrimitiveCupHeadHealth: ", "10", "5", "2");
+        setText(gettingDamagedCoefficientText, "GettingDamagedCoefficient: ", "50%", "100%", "150%");
+        setText(makingDamageCoefficientText, "MakingDamageCoefficient: ", "150%", "100%", "50%");
     }
 }

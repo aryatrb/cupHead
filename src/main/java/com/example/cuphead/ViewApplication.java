@@ -5,13 +5,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import com.example.cuphead.realcontroller.SettingController;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -19,7 +15,6 @@ public class ViewApplication extends Application {
     private static Stage globeStage;
     private static Scene scene;
     private static Pane pane;
-    private static MediaPlayer mediaPlayer;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -28,7 +23,7 @@ public class ViewApplication extends Application {
         globeStage = stage;
         SettingController.setIsSoundOn(true);
         sceneChanger("loginMenu.fxml");
-        playMusic("menuMusic");
+        SettingController.playMusic("menuMusic");
     }
 
     public static void main(String[] args) {
@@ -43,23 +38,6 @@ public class ViewApplication extends Application {
         globeStage.setTitle("CupHead");
         globeStage.setScene(scene);
         globeStage.show();
-    }
-
-    public static void playMusic(String string) {
-
-        if (mediaPlayer != null)
-            mediaPlayer.stop();
-        mediaPlayer = new MediaPlayer(new Media(
-                new File("src/main/resources/com/example/assets/music/" +
-                        string + ".mp3").toURI().toString()));
-        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
-        mediaPlayer.play();
-        if (!SettingController.isIsSoundOn())
-            mediaPlayer.setMute(true);
-    }
-
-    public static MediaPlayer getMediaPlayer() {
-        return mediaPlayer;
     }
 
     public static Scene getScene() {

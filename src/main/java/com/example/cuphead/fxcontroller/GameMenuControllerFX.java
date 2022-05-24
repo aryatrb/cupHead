@@ -24,18 +24,20 @@ import java.util.TimerTask;
 
 public class GameMenuControllerFX implements Initializable {
 
-    private final boolean[] secondKeys = new boolean[5];
-    private long spaceKeyTime;
+    private static AnimationTimer animationTimer;
 
     @FXML
     VBox vbox;
+
     @FXML
     AnchorPane pane;
+
     @FXML
     private ImageView background, cupHeadImage, bossImage;
 
-    private static AnimationTimer animationTimer;
-    private Text timerText = new Text();
+    private final boolean[] secondKeys = new boolean[5];
+    private final Text timerText = new Text();
+    private long spaceKeyTime;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -74,14 +76,15 @@ public class GameMenuControllerFX implements Initializable {
         GameController.setPane(pane);
         SettingController.setEffect(pane);
         GameController.setCupHead(new CupHead(cupHeadImage));
-        GameController.setBoss(new Boss());
+        bossImage = new ImageView();
+        GameController.setBoss(new Boss(bossImage));
         bossImage = GameController.getBoss().getImageView();
         pane.getChildren().add(bossImage);
         updateCupHeadPosition();
         GameController.setStart(System.currentTimeMillis());
         timerText.setText(GameController.getTimerText());
         timerText.setX(10);
-        timerText.setY(GameController.getWindowHeight()*0.97);
+        timerText.setY(GameController.getWindowHeight() * 0.97);
         timerText.setFill(Paint.valueOf("WHITE"));
         timerText.setFont(new Font(57));
         pane.getChildren().add(timerText);

@@ -4,10 +4,16 @@ import com.example.cuphead.model.Difficulty;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
+import java.io.File;
 
 public class SettingController {
     private final static ColorAdjust GRAY_SCALE = new ColorAdjust();
     private final static ColorAdjust COLORFUL = new ColorAdjust();
+    private static MediaPlayer mediaPlayer;
     private static Difficulty difficulty;
     private static boolean isDevilMode;
     private static boolean isSoundOn;
@@ -26,6 +32,23 @@ public class SettingController {
         if(isBW)
             pane.setEffect(GRAY_SCALE);
         else pane.setEffect(COLORFUL);
+    }
+
+    public static void playMusic(String string) {
+
+        if (mediaPlayer != null)
+            mediaPlayer.stop();
+        mediaPlayer = new MediaPlayer(new Media(
+                new File("src/main/resources/com/example/assets/music/" +
+                        string + ".mp3").toURI().toString()));
+        mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+        mediaPlayer.play();
+        if (!SettingController.isIsSoundOn())
+            mediaPlayer.setMute(true);
+    }
+
+    public static MediaPlayer getMediaPlayer() {
+        return mediaPlayer;
     }
 
     public static void setDifficulty(Difficulty difficulty) {
