@@ -77,7 +77,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
             return;
         }
         frame++;
-        if (frame % 8 != 0)
+        if (frame % 9 != 0)
             return;
         Random random = new Random();
         if (bossShooting())
@@ -286,8 +286,8 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     }
 
     private void crashWithCupHead() {
-        if (GameController.intersects(imageView,
-                GameController.getCupHead().getImageView())
+        if (GameController.intersectsTransParent(
+                GameController.getCupHead().getImageView(), imageView)
                 && GameController.getBlips() == 0) {
             try {
                 GameController.getCupHead().getDamage(this);

@@ -40,9 +40,7 @@ public class Bullet extends Transition implements Armament {
     }
 
     private boolean intersectBoss() {
-        if (GameController.intersectsTransParent(imageView, GameController.getBoss().getImageView()))
-        /*if (GameController.intersects(GameController.getBoss().getImageView(),
-                imageView, GameController.getBoss()))*/ {
+        if (GameController.intersectsTransParent(imageView, GameController.getBoss().getImageView())) {
             try {
                 GameController.getBoss().getDamage(this);
             } catch (IOException e) {

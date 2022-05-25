@@ -84,8 +84,11 @@ public class GameController {
 
     public static void blip(Timer timer) {
         blips++;
-        if (blips == 3)
+        if (blips >= 3)
+        {
             timer.cancel();
+            blips=0;
+        }
         cupHead.getImageView().setOpacity(0);
         Timer timer2 = new Timer();
         timer2.schedule(new TimerTask() {
@@ -98,11 +101,8 @@ public class GameController {
     }
 
     public static void unBlip(Timer timer) {
-        if (blips == 3) {
-            timer.cancel();
-            blips = 0;
-        }
         cupHead.getImageView().setOpacity(1);
+        timer.cancel();
     }
 
     public static void shootEggs() {
@@ -143,13 +143,12 @@ public class GameController {
             for (int i = (int) imageView1.getImage().getWidth() - 1; i >= 0; i--)
                 if (transParentOperation(imageView1, imageView2, i, j))
                     return true;
-        System.out.println();
         return false;
     }
 
     private static boolean transParentOperation(ImageView imageView1, ImageView imageView2, int i, int j) {
-        if (imageView1.getImage().getPixelReader().getColor(i, j).getOpacity() == 0)
-            return false;
+//        if (imageView1.getImage().getPixelReader().getColor(i, j).getOpacity() == 0)
+//            return false;
         int wx = (int) (imageView1.getX() + i - imageView2.getX());
         int wy = (int) (imageView1.getY() + j - imageView2.getY());
 
@@ -164,16 +163,15 @@ public class GameController {
 
     public static boolean intersects(ImageView imageView1,
                                      ImageView imageView2) {
-        double width1 = imageView1.getImage().getWidth(),
-                width2 = imageView2.getImage().getWidth();
-        double x1 = imageView1.getX(), x2 = imageView2.getX();
-        double middleX1 = x1 + width1 / 2, middleX2 = x2 + width2 / 2;
-        if (Math.abs(middleX1 - middleX2) > (width1 + width2) / 2)
+        double middleX1 = imageView1.getX() + imageView1.getImage().getWidth() / 2,
+                middleX2 = imageView2.getX() + imageView2.getImage().getWidth() / 2;
+        if (Math.abs(middleX1 - middleX2) >
+                (imageView1.getImage().getWidth() + imageView2.getImage().getWidth()) / 2)
             return false;
-        double height1 = imageView1.getImage().getHeight(), height2 = imageView2.getImage().getHeight();
-        double y1 = imageView1.getY(), y2 = imageView2.getY();
-        double middleY1 = y1 + height1 / 2, middleY2 = y2 + height2 / 2;
-        return !(Math.abs(middleY1 - middleY2) > (height1 + height2) / 2);
+        double middleY1 = imageView1.getY() + imageView1.getImage().getHeight() / 2,
+                middleY2 = imageView2.getY() + imageView2.getImage().getHeight() / 2;
+        return !(Math.abs(middleY1 - middleY2) >
+                (imageView1.getImage().getHeight() + imageView2.getImage().getHeight()) / 2);
     }
 
     public static void deleteEgg(Egg egg) {

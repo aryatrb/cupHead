@@ -34,7 +34,7 @@ public class HitDust extends Transition {
     @Override
     protected void interpolate(double v) {
         rate++;
-        if (rate < 3)
+        if (rate < 7)
             return;
         imageView.setImage(IMAGES[imageNumber]);
         imageNumber++;
