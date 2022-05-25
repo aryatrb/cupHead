@@ -33,13 +33,13 @@ public class ScoreboardControllerFX implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ProfileControllerFX.loadProfile(User
-                .getListOfUsers().get(0).getAvatarNumber(),
+                        .getListOfUsers().get(0).getAvatarNumber(),
                 firstPP);
         ProfileControllerFX.loadProfile(User
-                .getListOfUsers().get(1).getAvatarNumber(),
+                        .getListOfUsers().get(1).getAvatarNumber(),
                 secondPP);
         ProfileControllerFX.loadProfile(User
-                .getListOfUsers().get(2).getAvatarNumber(),
+                        .getListOfUsers().get(2).getAvatarNumber(),
                 thirdPP);
         text0.setText(getDetails(0));
         text1.setText(getDetails(1));

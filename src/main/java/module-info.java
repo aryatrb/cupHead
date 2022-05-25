@@ -25,4 +25,10 @@ module com.example.fx {
     opens com.example.assets.cuphead;
     opens com.example.assets.boss.phase3.fly;
     opens com.example.assets.boss.phase3.shoot;
+    opens com.example.assets.cuphead.moving.down;
+    opens com.example.assets.cuphead.moving.up;
+    opens com.example.assets.cuphead.moving.straight;
+    opens com.example.assets.cuphead.moving.turning.down;
+    opens com.example.assets.cuphead.moving.turning.up;
+    opens com.example.assets.boss.hitdust;
 }

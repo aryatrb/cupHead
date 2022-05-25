@@ -16,9 +16,11 @@ public class Egg extends Transition implements Armament {
     private static AudioClip audioClip = new AudioClip(
             new File("src/main/resources/com/example/assets/music/eggSound.wav")
                     .toURI().toString());
+
     static {
         audioClip.setVolume(0.5);
     }
+
     private final ImageView imageView;
     private final boolean isHorizontal;
 
@@ -29,14 +31,16 @@ public class Egg extends Transition implements Armament {
         imageView.setY(positionY);
         imageView.setFitHeight(58);
         imageView.setFitWidth(50);
-        isHorizontal= GameController.getBoss().getPhase() != 3;
-        if(!isHorizontal)
-        {
+        isHorizontal = GameController.getBoss().getPhase() != 3;
+        if (!isHorizontal) {
             imageView.setX(imageView.getX() +
                     GameController.getBoss().getImageView().getImage().getWidth() * 0.69);
             imageView.setY(imageView.getY() +
-                    GameController.getBoss().getImageView().getImage().getHeight()*0.3);
-        }
+                    GameController.getBoss().getImageView().getImage().getHeight() * 0.3);
+        } else if (GameController.getBoss().getPhase() == 1)
+            imageView.setY(positionY + GameController.getBoss().getImageView().getImage().getHeight() * 0.45);
+        else
+            imageView.setY(positionY + GameController.getBoss().getImageView().getImage().getHeight() * 0.30);
 
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
@@ -56,13 +60,12 @@ public class Egg extends Transition implements Armament {
 
     @Override
     protected void interpolate(double v) {
-        if(isHorizontal)
+        if (isHorizontal)
             imageView.setX(imageView.getX() - getSpeed());
         else
-            imageView.setY(imageView.getY()-getSpeed());
+            imageView.setY(imageView.getY() - getSpeed());
         if (GameController.intersects(imageView,
-                GameController.getCupHead().getImageView(),
-                null) && GameController.getBlips() == 0) {
+                GameController.getCupHead().getImageView()) && GameController.getBlips() == 0) {
             try {
                 GameController.getCupHead().getDamage(this);
             } catch (IOException e) {
@@ -72,7 +75,7 @@ public class Egg extends Transition implements Armament {
             return;
         }
         if ((isHorizontal && imageView.getX() < 0) ||
-                (!isHorizontal && imageView.getY() + imageView.getFitHeight()<0))
+                (!isHorizontal && imageView.getY() + imageView.getFitHeight() < 0))
             GameController.deleteEgg(this);
     }
 
@@ -84,8 +87,7 @@ public class Egg extends Transition implements Armament {
         return audioClip;
     }
 
-    public static void setAudioClip(String name)
-    {
+    public static void setAudioClip(String name) {
         audioClip = new AudioClip(
                 new File("src/main/resources/com/example/assets/music/" + name + ".wav")
                         .toURI().toString());

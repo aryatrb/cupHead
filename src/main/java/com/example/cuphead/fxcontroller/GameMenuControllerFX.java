@@ -33,7 +33,7 @@ public class GameMenuControllerFX implements Initializable {
     AnchorPane pane;
 
     @FXML
-    private ImageView background, cupHeadImage;
+    private ImageView background;
 
     private final boolean[] secondKeys = new boolean[5];
     private final Text timerText = new Text();
@@ -43,12 +43,11 @@ public class GameMenuControllerFX implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startTheGame();
         makeAnimationTimer();
-        Platform.runLater(() -> cupHeadImage.requestFocus());
-        cupHeadImage.setOnKeyPressed(keyEvent -> {
-            pressedOrReleased(keyEvent.getCode().getName(), true);
-            updateCupHeadPosition();
-        });
-        cupHeadImage.setOnKeyReleased(keyEvent -> pressedOrReleased(keyEvent.getCode().getName(),
+        Platform.runLater(() -> GameController.getCupHead().getImageView().requestFocus());
+        GameController.getCupHead().getImageView().setOnKeyPressed(keyEvent ->
+                pressedOrReleased(keyEvent.getCode().getName(), true));
+        GameController.getCupHead().getImageView().setOnKeyReleased(keyEvent ->
+                pressedOrReleased(keyEvent.getCode().getName(),
                 false));
         GameController.getTimerToBuildMiniBoss().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -64,21 +63,14 @@ public class GameMenuControllerFX implements Initializable {
                     .get(GameController.getBullets().size() - 1).getImageView());
     }
 
-    private void updateCupHeadPosition() {
-        cupHeadImage.setX(GameController.getCupHead().getImageView().getX());
-        cupHeadImage.setY(GameController.getCupHead().getImageView().getY());
-    }
-
     private void startTheGame() {
         GameController.setTimerToBuildMiniBoss(new Timer());
         GameController.setEnd(0);
         Arrays.fill(secondKeys, false);
         GameController.setPane(pane);
         SettingController.setEffect(pane);
-        GameController.setCupHead(new CupHead(cupHeadImage));
-        GameController.setBoss(new Boss(new ImageView()));
-        pane.getChildren().add(GameController.getBoss().getImageView());
-        updateCupHeadPosition();
+        GameController.setCupHead(new CupHead());
+        GameController.setBoss(new Boss());
         GameController.setStart(System.currentTimeMillis());
         timerText.setText(GameController.getTimerText());
         timerText.setX(10);
@@ -118,8 +110,8 @@ public class GameMenuControllerFX implements Initializable {
         switch (name) {
             case "Left", "A" -> secondKeys[0] = bool;
             case "Right", "D" -> secondKeys[1] = bool;
-            case "Up", "W" -> secondKeys[2] = bool;
-            case "Down", "S" -> secondKeys[3] = bool;
+            case "Up", "W" -> flyAnimationSetup(bool, 2);
+            case "Down", "S" -> flyAnimationSetup(bool, 3);
             case "Space" -> {
                 if (bool && !secondKeys[4]) {
                     spaceClick(true);
@@ -128,6 +120,25 @@ public class GameMenuControllerFX implements Initializable {
                 secondKeys[4] = bool;
             }
         }
+    }
+
+    private void flyAnimationSetup(boolean bool, int arr) {
+        int moving=1;
+        if(arr==3)
+            moving=-1;
+        if (bool && !secondKeys[arr]) {
+            GameController.getCupHead().setMoving(moving);
+            GameController.getCupHead().setIsTurning(true);
+            GameController.getCupHead().setStopping(false);
+            GameController.getCupHead().setMovingCycle(0);
+        } else if (!bool && secondKeys[arr]) {
+            GameController.getCupHead().setStopping(true);
+            if (!GameController.getCupHead().isTurning())
+                GameController.getCupHead().setMovingCycle(10);
+            else
+                GameController.getCupHead().setIsTurning(false);
+        }
+        secondKeys[arr] = bool;
     }
 
     public static AnimationTimer getAnimationTimer() {

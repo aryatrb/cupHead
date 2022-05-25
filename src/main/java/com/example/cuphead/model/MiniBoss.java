@@ -41,7 +41,7 @@ public class MiniBoss extends Transition implements Armament, HealthyBeing {
         this.isYellow = isYellow;
         healthBar = new HealthBar(this,
                 imageView, true);
-        if(isYellow)
+        if (isYellow)
             imageView.setImage(YELLOW_PHOTO[0]);
         else
             imageView.setImage(PURPLE_PHOTO[0]);
@@ -92,8 +92,7 @@ public class MiniBoss extends Transition implements Armament, HealthyBeing {
 
     private boolean interactsCupHead() {
         if (GameController.intersects(imageView,
-                GameController.getCupHead().getImageView(),
-                null) && GameController.getBlips() == 0) {
+                GameController.getCupHead().getImageView()) && GameController.getBlips() == 0) {
             try {
                 GameController.getCupHead().getDamage(this);
             } catch (IOException e) {

@@ -20,8 +20,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private static final Image[] SHOOT_IMAGES_PHASE_TWO = new Image[20];
     private static final Image[] SHOOT_IMAGES_PHASE_THREE = new Image[16];
     private static ImageView imageView = null;
-    private final HealthBar healthBar;
-    private double health = 2;
+    private double health = 1000;
     private double secondHealth = 750;
     private boolean isShooting;
     private int moveCycleX, moveCycleY;
@@ -52,22 +51,19 @@ public class Boss extends Transition implements Armament, HealthyBeing {
                     (i + 1) + ".png");
     }
 
-    public Boss(ImageView imageView) {
+    public Boss() {
         frame = 0;
         isShooting = false;
         imageFlyNum = 0;
         shootCycle = -1;
         moveCycleY = 0;
-        Boss.imageView = imageView;
-//        Boss.imageView.setFitHeight(329);
-//        Boss.imageView.setFitWidth(517.1854);
+        Boss.imageView = new ImageView();
         Boss.imageView.setX(851);
         Boss.imageView.setY(36);
         Boss.imageView.setImage(FLY_IMAGES_PHASE_ONE[imageFlyNum]);
-//        imageView.preserveRatioProperty();
-//        imageView.pickOnBoundsProperty();
-        healthBar = new HealthBar(this, Boss.imageView, false);
+        new HealthBar(this, Boss.imageView, false);
         phase = 1;
+        GameController.getPane().getChildren().add(imageView);
         this.setCycleDuration(Duration.seconds(40));
         this.setCycleCount(-1);
         this.play();
@@ -81,7 +77,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
             return;
         }
         frame++;
-        if (frame % 10 != 0)
+        if (frame % 8 != 0)
             return;
         Random random = new Random();
         if (bossShooting())
@@ -177,10 +173,14 @@ public class Boss extends Transition implements Armament, HealthyBeing {
             images = SHOOT_IMAGES_PHASE_TWO;
         if (phase == 3)
             images = SHOOT_IMAGES_PHASE_THREE;
-        if ((phase != 3 && !isShooting &&
+        if ((phase == 1 && !isShooting &&
                 Math.abs(GameController.getCupHead().getImageView().getY() +
                         GameController.getCupHead().getImageView().getFitHeight() / 2
-                        - imageView.getY() - imageView.getImage().getHeight() / 2) < 50) ||
+                        - imageView.getY() - imageView.getImage().getHeight() * 0.45 + 29) < 50) ||
+                (phase == 2 && !isShooting &&
+                        Math.abs(GameController.getCupHead().getImageView().getY() +
+                                GameController.getCupHead().getImageView().getFitHeight() / 2
+                                - imageView.getY() - imageView.getImage().getHeight() * 0.30 + 29) < 50) ||
                 (phase == 3 && !isShooting &&
                         Math.abs(GameController.getCupHead().getImageView().getX() +
                                 GameController.getCupHead().getImageView().getFitWidth() / 2
@@ -236,8 +236,8 @@ public class Boss extends Transition implements Armament, HealthyBeing {
         double healthBefore = health;
         if (health > 0) {
             health -= armament.getCapableDamage();
-            if (SettingController.isDevilMode() && health < 1000 &&
-                    healthBefore >= 1000) {
+            if (SettingController.isDevilMode() && health < 500 &&
+                    healthBefore >= 500) {
                 phase = 2;
                 imageFlyNum = 0;
                 shootCycle = 0;
@@ -287,7 +287,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
 
     private void crashWithCupHead() {
         if (GameController.intersects(imageView,
-                GameController.getCupHead().getImageView(), this)
+                GameController.getCupHead().getImageView())
                 && GameController.getBlips() == 0) {
             try {
                 GameController.getCupHead().getDamage(this);

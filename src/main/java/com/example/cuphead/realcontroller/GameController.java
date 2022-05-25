@@ -29,10 +29,10 @@ public class GameController {
     public static void changeCupHeadPosition(int direction) {
         int changeDirectionPerClick = 3;
         switch (direction) {
-            case 1 -> cupHead.getImageView().setX(cupHead.getImageView().getX()
-                    + changeDirectionPerClick);
             case 0 -> cupHead.getImageView().setX(cupHead.getImageView().getX()
                     - changeDirectionPerClick);
+            case 1 -> cupHead.getImageView().setX(cupHead.getImageView().getX()
+                    + changeDirectionPerClick);
             case 2 -> cupHead.getImageView().setY(cupHead.getImageView().getY()
                     - changeDirectionPerClick);
             case 3 -> cupHead.getImageView().setY(cupHead.getImageView().getY()
@@ -107,33 +107,33 @@ public class GameController {
 
     public static void shootEggs() {
         Egg egg = new Egg(boss.getImageView().getX(),
-                boss.getImageView().getY() +
-                        boss.getImageView().getFitHeight() / 3);
+                boss.getImageView().getY());
         EGGS.add(egg);
         pane.getChildren().add(egg.getImageView());
     }
 
     public static void deleteBullet(Bullet bullet) {
         bullet.getImageView().setImage(null);
+        pane.getChildren().remove(bullet.getImageView());
         bullet.stop();
         BULLETS.remove(bullet);
+        new HitDust(bullet.getImageView());
     }
 
     public static void deleteMiniBuss(MiniBoss miniBoss) {
-        miniBoss.getHealthBar().getText().setOpacity(0);
         miniBoss.stop();
-        miniBoss.getImageView().setImage(null);
+        pane.getChildren().remove(miniBoss.getImageView());
         miniBosses.remove(miniBoss);
         miniBoss.getHealthBar().stop();
-        miniBoss.getHealthBar().getText().setText(null);
-        miniBoss.getHealthBar().getFormat().setImage(null);
-        miniBoss.getHealthBar().getGreenBar().setImage(null);
-        miniBoss.getHealthBar().getBlueBar().setImage(null);
+        pane.getChildren().remove(miniBoss.getHealthBar().getText());
+        pane.getChildren().remove(miniBoss.getHealthBar().getFormat());
+        pane.getChildren().remove(miniBoss.getHealthBar().getGreenBar());
+        pane.getChildren().remove(miniBoss.getHealthBar().getBlueBar());
     }
 
     public static boolean intersectsTransParent(ImageView imageView1, ImageView imageView2) {
         if (imageView1.getImage() == null ||
-                !intersects(imageView1, imageView2, null))
+                !intersects(imageView1, imageView2))
             return false;
         for (int i = 0; i < imageView1.getImage().getWidth(); i += (int) imageView1.getImage().getWidth() - 1)
             for (int j = (int) imageView1.getImage().getHeight() - 1; j >= 0; j--)
@@ -163,29 +163,15 @@ public class GameController {
     }
 
     public static boolean intersects(ImageView imageView1,
-                                     ImageView imageView2,
-                                     Armament armament1) {
+                                     ImageView imageView2) {
         double width1 = imageView1.getImage().getWidth(),
                 width2 = imageView2.getImage().getWidth();
         double x1 = imageView1.getX(), x2 = imageView2.getX();
-        if (armament1 instanceof Boss) {
-            if (boss.getPhase() == 1)
-                width1 *= 0.7211;
-            else if (boss.getPhase() == 2)
-                width1 *= 0.8092;
-            x1 += imageView1.getImage().getWidth() - width1;
-        }
         double middleX1 = x1 + width1 / 2, middleX2 = x2 + width2 / 2;
         if (Math.abs(middleX1 - middleX2) > (width1 + width2) / 2)
             return false;
         double height1 = imageView1.getImage().getHeight(), height2 = imageView2.getImage().getHeight();
         double y1 = imageView1.getY(), y2 = imageView2.getY();
-        if (armament1 instanceof Boss) {
-            if (boss.getPhase() == 1)
-                height1 *= 0.8844;
-            if (boss.getPhase() == 2)
-                height1 *= 0.8082;
-        }
         double middleY1 = y1 + height1 / 2, middleY2 = y2 + height2 / 2;
         return !(Math.abs(middleY1 - middleY2) > (height1 + height2) / 2);
     }
@@ -308,5 +294,11 @@ public class GameController {
 
     public static CupHead getCupHead() {
         return cupHead;
+    }
+
+    public static void deleteDust(HitDust hitDust) {
+        hitDust.stop();
+        pane.getChildren().remove(hitDust.getImageView());
+        hitDust.getImageView().setImage(null);
     }
 }

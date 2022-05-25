@@ -27,20 +27,10 @@ public class Bullet extends Transition implements Armament {
 
     @Override
     protected void interpolate(double v) {
-        for (int i = 0; i < getSpeed(); i+=2)
-            imageView.setX(imageView.getX() + 2);
-        if (intersectBoss())
-            return;
-        if (intersectMiniBoss())
-        {
+        imageView.setX(imageView.getX() + getSpeed());
+        if (intersectBoss() || intersectMiniBoss() ||
+                imageView.getX() > GameController.getWindowWidth())
             GameController.deleteBullet(this);
-            return;
-        }
-        if (imageView.getX() > GameController.getWindowWidth())
-        {
-            GameController.deleteBullet(this);
-            return;
-        }
     }
 
     @Override
@@ -50,7 +40,7 @@ public class Bullet extends Transition implements Armament {
     }
 
     private boolean intersectBoss() {
-        if (GameController.intersectsTransParent(imageView,GameController.getBoss().getImageView()))
+        if (GameController.intersectsTransParent(imageView, GameController.getBoss().getImageView()))
         /*if (GameController.intersects(GameController.getBoss().getImageView(),
                 imageView, GameController.getBoss()))*/ {
             try {
@@ -58,7 +48,6 @@ public class Bullet extends Transition implements Armament {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            GameController.deleteBullet(this);
             return true;
         }
         return false;
@@ -67,7 +56,7 @@ public class Bullet extends Transition implements Armament {
     private boolean intersectMiniBoss() {
         for (MiniBoss miniBoss : GameController.getMiniBosses()) {
             if (GameController.intersects(miniBoss.getImageView(),
-                    imageView, null)) {
+                    imageView)) {
                 miniBoss.getDamage(this);
                 GameController.deleteBullet(this);
                 return true;
