@@ -33,7 +33,7 @@ public class GameMenuControllerFX implements Initializable {
     AnchorPane pane;
 
     @FXML
-    private ImageView background, cupHeadImage, bossImage;
+    private ImageView background, cupHeadImage;
 
     private final boolean[] secondKeys = new boolean[5];
     private final Text timerText = new Text();
@@ -76,10 +76,8 @@ public class GameMenuControllerFX implements Initializable {
         GameController.setPane(pane);
         SettingController.setEffect(pane);
         GameController.setCupHead(new CupHead(cupHeadImage));
-        bossImage = new ImageView();
-        GameController.setBoss(new Boss(bossImage));
-        bossImage = GameController.getBoss().getImageView();
-        pane.getChildren().add(bossImage);
+        GameController.setBoss(new Boss(new ImageView()));
+        pane.getChildren().add(GameController.getBoss().getImageView());
         updateCupHeadPosition();
         GameController.setStart(System.currentTimeMillis());
         timerText.setText(GameController.getTimerText());
@@ -98,12 +96,10 @@ public class GameMenuControllerFX implements Initializable {
                 if (background.getX() <= -3645.9354)
                     background.setX(0);
                 timerText.setText(GameController.getTimerText());
-                bossImage.setImage(GameController.getBoss().getImageView().getImage());
                 if (GameController.getCupHead().getHealth() <= 0) {
                     try {
                         GameController.endTheGame(false);
                     } catch (IOException ignored) {
-
                     }
                 }
                 for (int i = 0; i < secondKeys.length - 1; i++)
@@ -130,7 +126,6 @@ public class GameMenuControllerFX implements Initializable {
                     spaceKeyTime = System.currentTimeMillis();
                 }
                 secondKeys[4] = bool;
-
             }
         }
     }

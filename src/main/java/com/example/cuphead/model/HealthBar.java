@@ -81,6 +81,12 @@ public class HealthBar extends Transition {
     }
 
     private void fixSizeFormat() {
+        if(healthyBeing instanceof Boss)
+        {
+            format.setFitWidth(healthyBeingImageView.getImage().getWidth());
+            format.setFitHeight(healthyBeingImageView.getImage().getWidth() / 7.191489);
+            return;
+        }
         format.setFitWidth(healthyBeingImageView.getFitWidth());
         format.setFitHeight(healthyBeingImageView.getFitWidth() / 7.191489);
     }

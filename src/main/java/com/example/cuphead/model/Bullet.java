@@ -27,11 +27,8 @@ public class Bullet extends Transition implements Armament {
 
     @Override
     protected void interpolate(double v) {
-        for (int i = 0; i < getSpeed(); i+=2) {
+        for (int i = 0; i < getSpeed(); i+=2)
             imageView.setX(imageView.getX() + 2);
-            if (intersectBoss())
-                return;
-        }
         if (intersectBoss())
             return;
         if (intersectMiniBoss())
@@ -53,8 +50,9 @@ public class Bullet extends Transition implements Armament {
     }
 
     private boolean intersectBoss() {
-        if (GameController.intersects(GameController.getBoss().getImageView(),
-                imageView, GameController.getBoss())) {
+        if (GameController.intersectsTransParent(imageView,GameController.getBoss().getImageView()))
+        /*if (GameController.intersects(GameController.getBoss().getImageView(),
+                imageView, GameController.getBoss()))*/ {
             try {
                 GameController.getBoss().getDamage(this);
             } catch (IOException e) {

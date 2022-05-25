@@ -21,7 +21,7 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private static final Image[] SHOOT_IMAGES_PHASE_THREE = new Image[16];
     private static ImageView imageView = null;
     private final HealthBar healthBar;
-    private double health = 1000;
+    private double health = 2;
     private double secondHealth = 750;
     private boolean isShooting;
     private int moveCycleX, moveCycleY;
@@ -59,8 +59,8 @@ public class Boss extends Transition implements Armament, HealthyBeing {
         shootCycle = -1;
         moveCycleY = 0;
         Boss.imageView = imageView;
-        Boss.imageView.setFitHeight(329);
-        Boss.imageView.setFitWidth(517.1854);
+//        Boss.imageView.setFitHeight(329);
+//        Boss.imageView.setFitWidth(517.1854);
         Boss.imageView.setX(851);
         Boss.imageView.setY(36);
         Boss.imageView.setImage(FLY_IMAGES_PHASE_ONE[imageFlyNum]);
@@ -140,10 +140,10 @@ public class Boss extends Transition implements Armament, HealthyBeing {
             moveSGN = random.nextInt(49) % 3 - 1;
             double yDouble = GameController.getCupHead().getImageView().getY() +
                     GameController.getCupHead().getImageView().getFitHeight() / 2 -
-                    imageView.getFitHeight() / 2 - imageView.getY();
+                    imageView.getImage().getHeight() / 2 - imageView.getY();
             double xDouble = GameController.getCupHead().getImageView().getX() +
                     GameController.getCupHead().getImageView().getFitWidth() / 2 -
-                    imageView.getFitWidth() * 0.69 - imageView.getX();
+                    imageView.getImage().getWidth() * 0.69 - imageView.getX();
             if ((!isX && Math.abs(yDouble) > 10) ||
                     (phase == 3 && Math.abs(xDouble) > 8)) {
                 if ((!isX && yDouble < 0) ||
@@ -180,11 +180,11 @@ public class Boss extends Transition implements Armament, HealthyBeing {
         if ((phase != 3 && !isShooting &&
                 Math.abs(GameController.getCupHead().getImageView().getY() +
                         GameController.getCupHead().getImageView().getFitHeight() / 2
-                        - imageView.getY() - imageView.getFitHeight() / 2) < 50) ||
+                        - imageView.getY() - imageView.getImage().getHeight() / 2) < 50) ||
                 (phase == 3 && !isShooting &&
                         Math.abs(GameController.getCupHead().getImageView().getX() +
                                 GameController.getCupHead().getImageView().getFitWidth() / 2
-                                - imageView.getX() - imageView.getFitWidth() * 0.69) < 50)) {
+                                - imageView.getX() - imageView.getImage().getWidth() * 0.69) < 50)) {
             isShooting = true;
             shootCycle = -1;
             if (phase != 2)
@@ -220,9 +220,9 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private void setImage(Image image) {
         if (phase == 2) {
             double balancedWidth = image.getWidth() / image.getHeight() * 200;
-            double difference = balancedWidth - imageView.getFitWidth();
+            double difference = balancedWidth - imageView.getImage().getWidth();
             imageView.setX(imageView.getX() - difference);
-            imageView.setFitWidth(imageView.getFitWidth() + difference);
+            imageView.setFitWidth(imageView.getImage().getWidth() + difference);
         }
         imageView.setImage(image);
     }
@@ -236,14 +236,12 @@ public class Boss extends Transition implements Armament, HealthyBeing {
         double healthBefore = health;
         if (health > 0) {
             health -= armament.getCapableDamage();
-            if (SettingController.isDevilMode() && health < 500 &&
-                    healthBefore >= 500) {
+            if (SettingController.isDevilMode() && health < 1000 &&
+                    healthBefore >= 1000) {
                 phase = 2;
                 imageFlyNum = 0;
                 shootCycle = 0;
                 imageView.setImage(FLY_IMAGES_PHASE_TWO[0]);
-                imageView.setFitHeight(200);
-                imageView.setFitWidth(161.7021);
                 Egg.setAudioClip("laser");
             }
             if (SettingController.isDevilMode() && health <= 0 && healthBefore > 0) {
@@ -251,8 +249,6 @@ public class Boss extends Transition implements Armament, HealthyBeing {
                 imageFlyNum = 0;
                 shootCycle = 0;
                 imageView.setImage(FLY_IMAGES_PHASE_THREE[0]);
-                imageView.setFitHeight(300);
-                imageView.setFitWidth(695.93);
                 imageView.setX(GameController.getWindowWidth() * 2 / 5);
                 imageView.setY(GameController.getWindowHeight() * 3 / 5);
                 Egg.setAudioClip("eggSound");
@@ -277,16 +273,16 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private void fixCoordinateFaults() {
         if (imageView.getY() < -60)
             imageView.setY(-60);
-        if (imageView.getY() > GameController.getWindowHeight() - imageView.getFitHeight() / 2)
-            imageView.setY(GameController.getWindowHeight() - imageView.getFitHeight() / 2);
+        if (imageView.getY() > GameController.getWindowHeight() - imageView.getImage().getHeight() / 2)
+            imageView.setY(GameController.getWindowHeight() - imageView.getImage().getHeight() / 2);
         if ((imageView.getX() < GameController.getWindowWidth() * 3 / 5 && phase != 3))
             imageView.setX(GameController.getWindowWidth() * 3 / 5);
-        if (imageView.getX() + imageView.getFitWidth() * 0.69 < 0 && phase == 3)
-            imageView.setX(-imageView.getFitWidth() * 0.69);
-        if (imageView.getX() > GameController.getWindowWidth() - imageView.getFitWidth() && phase != 3)
-            imageView.setX(GameController.getWindowWidth() - imageView.getFitWidth());
-        if (imageView.getX() + imageView.getFitWidth() * 0.69 > GameController.getWindowWidth())
-            imageView.setX(GameController.getWindowWidth() - imageView.getFitWidth() * 0.69);
+        if (imageView.getX() + imageView.getImage().getWidth() * 0.69 < 0 && phase == 3)
+            imageView.setX(-imageView.getImage().getWidth() * 0.69);
+        if (imageView.getX() > GameController.getWindowWidth() - imageView.getImage().getWidth() && phase != 3)
+            imageView.setX(GameController.getWindowWidth() - imageView.getImage().getWidth());
+        if (imageView.getX() + imageView.getImage().getWidth() * 0.69 > GameController.getWindowWidth())
+            imageView.setX(GameController.getWindowWidth() - imageView.getImage().getWidth() * 0.69);
     }
 
     private void crashWithCupHead() {

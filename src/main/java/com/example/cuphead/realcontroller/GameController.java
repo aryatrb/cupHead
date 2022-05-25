@@ -131,51 +131,54 @@ public class GameController {
         miniBoss.getHealthBar().getBlueBar().setImage(null);
     }
 
-//    public static boolean intersects2(ImageView imageView1, ImageView imageView2) {
-//        imageView2.setOpacity(1);
-//        if (imageView1.getImage() == null)
-//            return false;
-//        for (int i = (int)imageView1.getFitWidth()-1; i >=0; i--)
-//            for (int j = (int) imageView1.getFitHeight()-1; j >=0; j--) {
-//                if (imageView1.getImage().getPixelReader().getColor(i, j).getOpacity() == 0)
-//                    continue;
-//                int wx = (int) (imageView1.getX() + i - imageView2.getX());
-//                int wy = (int) (imageView1.getY() + j - imageView2.getY());
-//                if (wx < 0 ||
-//                        wx >= imageView2.getFitWidth() ||
-//                        wy < 0 ||
-//                        wy >= imageView2.getFitHeight())
-//                    continue;
-//                double op = imageView2.getImage().getPixelReader().getColor(wx, wy).getOpacity();
-//                if(wx>155)
-//                    System.out.println(165);
-//                System.out.println("wx: " + wx + " wy: " + wy + " op: " + op + " i: " + i + " j: " + j + " img1x: " +
-//                        imageView1.getX() + " img2x: " + imageView2.getX() + " img1y: " + imageView1.getY() + " img2y: " + imageView2.getY() + "w1: " + imageView1.getFitWidth());
-//                if (op != 0) {
-//                    System.out.println("done");
-//                    return true;
-//                }
-//            }
-//        System.out.println();
-//        return false;
-//    }
+    public static boolean intersectsTransParent(ImageView imageView1, ImageView imageView2) {
+        if (imageView1.getImage() == null ||
+                !intersects(imageView1, imageView2, null))
+            return false;
+        for (int i = 0; i < imageView1.getImage().getWidth(); i += (int) imageView1.getImage().getWidth() - 1)
+            for (int j = (int) imageView1.getImage().getHeight() - 1; j >= 0; j--)
+                if (transParentOperation(imageView1, imageView2, i, j))
+                    return true;
+        for (int j = 0; j < imageView1.getImage().getHeight(); j += (int) imageView1.getImage().getHeight() - 1)
+            for (int i = (int) imageView1.getImage().getWidth() - 1; i >= 0; i--)
+                if (transParentOperation(imageView1, imageView2, i, j))
+                    return true;
+        System.out.println();
+        return false;
+    }
+
+    private static boolean transParentOperation(ImageView imageView1, ImageView imageView2, int i, int j) {
+        if (imageView1.getImage().getPixelReader().getColor(i, j).getOpacity() == 0)
+            return false;
+        int wx = (int) (imageView1.getX() + i - imageView2.getX());
+        int wy = (int) (imageView1.getY() + j - imageView2.getY());
+
+        if (wx < 0 ||
+                wx >= imageView2.getImage().getWidth() ||
+                wy < 0 ||
+                wy >= imageView2.getImage().getHeight())
+            return false;
+        double op = imageView2.getImage().getPixelReader().getColor(wx, wy).getOpacity();
+        return op != 0;
+    }
 
     public static boolean intersects(ImageView imageView1,
                                      ImageView imageView2,
                                      Armament armament1) {
-        double width1 = imageView1.getFitWidth(), width2 = imageView2.getFitWidth();
+        double width1 = imageView1.getImage().getWidth(),
+                width2 = imageView2.getImage().getWidth();
         double x1 = imageView1.getX(), x2 = imageView2.getX();
         if (armament1 instanceof Boss) {
             if (boss.getPhase() == 1)
                 width1 *= 0.7211;
             else if (boss.getPhase() == 2)
                 width1 *= 0.8092;
-            x1 += imageView1.getFitWidth() - width1;
+            x1 += imageView1.getImage().getWidth() - width1;
         }
         double middleX1 = x1 + width1 / 2, middleX2 = x2 + width2 / 2;
         if (Math.abs(middleX1 - middleX2) > (width1 + width2) / 2)
             return false;
-        double height1 = imageView1.getFitHeight(), height2 = imageView2.getFitHeight();
+        double height1 = imageView1.getImage().getHeight(), height2 = imageView2.getImage().getHeight();
         double y1 = imageView1.getY(), y2 = imageView2.getY();
         if (armament1 instanceof Boss) {
             if (boss.getPhase() == 1)

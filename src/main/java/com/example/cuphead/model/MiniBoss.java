@@ -41,6 +41,10 @@ public class MiniBoss extends Transition implements Armament, HealthyBeing {
         this.isYellow = isYellow;
         healthBar = new HealthBar(this,
                 imageView, true);
+        if(isYellow)
+            imageView.setImage(YELLOW_PHOTO[0]);
+        else
+            imageView.setImage(PURPLE_PHOTO[0]);
     }
 
     @Override
