@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ProfileControllerFX implements Initializable {
@@ -101,8 +102,9 @@ public class ProfileControllerFX implements Initializable {
     }
 
     public static void loadProfile(int avatarNumber, ImageView newImageView) {
-        newImageView.setImage(new Image("com/example/assets/profilepictures/" +
-                avatarNumber + ".png"));
+        newImageView.setImage(new Image(Objects.requireNonNull(ViewApplication.class.getResource(
+                "assets/profilepictures/" +
+                        avatarNumber + ".png")).toExternalForm()));
     }
 
     public void initialize(URL location, ResourceBundle resources) {

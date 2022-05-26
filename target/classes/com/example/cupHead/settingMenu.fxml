@@ -19,7 +19,7 @@
             </font>
         </Label>
         <ImageView fitHeight="800.0" fitWidth="1380.0" layoutX="-50.0">
-            <Image url="@../assets/backgrounds/settingBackground.jpg"/>
+            <Image url="@assets/backgrounds/settingBackground.jpg"/>
         </ImageView>
         <Button fx:id="hardButton" layoutX="244.0"
                 layoutY="322.0" mnemonicParsing="false" text="no-Head"

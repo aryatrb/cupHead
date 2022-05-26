@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.example.cuphead.realcontroller.LoginController;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,7 +26,13 @@ public class User {
             listOfUsers = new Gson().fromJson(json, new TypeToken<List<User>>() {
             }.getType());
         } catch (IOException e) {
-            e.printStackTrace();
+            File file = new File("dataBase/users.json");
+            try {
+                file.createNewFile();
+                listOfUsers = new ArrayList<>();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

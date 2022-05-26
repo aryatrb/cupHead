@@ -1,5 +1,6 @@
 package com.example.cuphead.model;
 
+import com.example.cuphead.ViewApplication;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -10,12 +11,15 @@ import com.example.cuphead.realcontroller.SettingController;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class Egg extends Transition implements Armament {
-    private final static Image IMAGE = new Image("com/example/assets/boss/egg.png");
+    private final static Image IMAGE = new Image(Objects.requireNonNull(ViewApplication
+            .class.getResource("assets/boss/egg.png")).toExternalForm());
     private static AudioClip audioClip = new AudioClip(
-            new File("src/main/resources/com/example/assets/music/eggSound.wav")
-                    .toURI().toString());
+            Objects.requireNonNull(ViewApplication
+                            .class.getResource("assets/music/eggSound.wav"))
+                    .toExternalForm());
 
     static {
         audioClip.setVolume(0.5);
@@ -38,9 +42,11 @@ public class Egg extends Transition implements Armament {
             imageView.setY(imageView.getY() +
                     GameController.getBoss().getImageView().getImage().getHeight() * 0.3);
         } else if (GameController.getBoss().getPhase() == 1)
-            imageView.setY(positionY + GameController.getBoss().getImageView().getImage().getHeight() * 0.45);
+            imageView.setY(positionY + GameController.getBoss()
+                    .getImageView().getImage().getHeight() * 0.45);
         else
-            imageView.setY(positionY + GameController.getBoss().getImageView().getImage().getHeight() * 0.30);
+            imageView.setY(positionY + GameController.getBoss()
+                    .getImageView().getImage().getHeight() * 0.30);
 
         this.setCycleDuration(Duration.millis(1000));
         this.setCycleCount(-1);
@@ -88,9 +94,8 @@ public class Egg extends Transition implements Armament {
     }
 
     public static void setAudioClip(String name) {
-        audioClip = new AudioClip(
-                new File("src/main/resources/com/example/assets/music/" + name + ".wav")
-                        .toURI().toString());
+        audioClip = new AudioClip(Objects.requireNonNull(ViewApplication.class.getResource(
+                "src/main/resources/com/example/assets/music/" + name + ".wav")).toExternalForm());
         audioClip.setVolume(0.5);
     }
 }

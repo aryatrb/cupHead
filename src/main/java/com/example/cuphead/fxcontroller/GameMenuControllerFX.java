@@ -48,7 +48,7 @@ public class GameMenuControllerFX implements Initializable {
                 pressedOrReleased(keyEvent.getCode().getName(), true));
         GameController.getCupHead().getImageView().setOnKeyReleased(keyEvent ->
                 pressedOrReleased(keyEvent.getCode().getName(),
-                false));
+                        false));
         GameController.getTimerToBuildMiniBoss().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -123,9 +123,9 @@ public class GameMenuControllerFX implements Initializable {
     }
 
     private void flyAnimationSetup(boolean bool, int arr) {
-        int moving=1;
-        if(arr==3)
-            moving=-1;
+        int moving = 1;
+        if (arr == 3)
+            moving = -1;
         if (bool && !secondKeys[arr]) {
             GameController.getCupHead().setMoving(moving);
             GameController.getCupHead().setIsTurning(true);

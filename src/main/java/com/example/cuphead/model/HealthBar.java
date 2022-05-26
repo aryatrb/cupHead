@@ -1,11 +1,14 @@
 package com.example.cuphead.model;
 
+import com.example.cuphead.ViewApplication;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import com.example.cuphead.realcontroller.GameController;
+
+import java.util.Objects;
 
 public class HealthBar extends Transition {
     private static final Image[] IMAGES = new Image[3];
@@ -19,9 +22,12 @@ public class HealthBar extends Transition {
 
 
     static {
-        IMAGES[0] = new Image("com/example/assets/healthbar/healthBar.png");
-        IMAGES[1] = new Image("com/example/assets/healthbar/healthBarGreen.png");
-        IMAGES[2] = new Image("com/example/assets/healthbar/healthBarBlue.png");
+        IMAGES[0] = new Image(Objects.requireNonNull(ViewApplication
+                .class.getResource("assets/healthbar/healthBar.png")).toExternalForm());
+        IMAGES[1] = new Image(Objects.requireNonNull(ViewApplication
+                .class.getResource("assets/healthbar/healthBarGreen.png")).toExternalForm());
+        IMAGES[2] = new Image(Objects.requireNonNull(ViewApplication
+                .class.getResource("assets/healthbar/healthBarBlue.png")).toExternalForm());
     }
 
     public HealthBar(HealthyBeing healthyBeing,

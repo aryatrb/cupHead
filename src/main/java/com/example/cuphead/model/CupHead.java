@@ -1,5 +1,6 @@
 package com.example.cuphead.model;
 
+import com.example.cuphead.ViewApplication;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,6 +9,7 @@ import com.example.cuphead.realcontroller.SettingController;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,20 +29,25 @@ public class CupHead extends Transition implements HealthyBeing {
 
     static {
         for (int i = 0; i < FLY_IMAGES_UP.length; i++)
-            FLY_IMAGES_UP[i] = new Image("com/example/assets/cuphead/moving/up/" +
-                    (i + 1) + ".png");
+            FLY_IMAGES_UP[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/cuphead/moving/up/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < FLY_IMAGES_STRAIGHT.length; i++)
-            FLY_IMAGES_STRAIGHT[i] = new Image("com/example/assets/cuphead/moving/straight/" +
-                    (i + 1) + ".png");
+            FLY_IMAGES_STRAIGHT[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/cuphead/moving/straight/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < FLY_IMAGES_DOWN.length; i++)
-            FLY_IMAGES_DOWN[i] = new Image("com/example/assets/cuphead/moving/down/" +
-                    (i + 1) + ".png");
+            FLY_IMAGES_DOWN[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/cuphead/moving/down/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < FLY_TRANSITION_UP.length; i++)
-            FLY_TRANSITION_UP[i] = new Image("com/example/assets/cuphead/moving/turning/up/" +
-                    (i + 1) + ".png");
+            FLY_TRANSITION_UP[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/cuphead/moving/turning/up/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < FLY_TRANSITION_DOWN.length; i++)
-            FLY_TRANSITION_DOWN[i] = new Image("com/example/assets/cuphead/moving/turning/down/" +
-                    (i + 1) + ".png");
+            FLY_TRANSITION_DOWN[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/cuphead/moving/turning/down/" +
+                    (i + 1) + ".png")).toExternalForm());
     }
 
     public CupHead() {

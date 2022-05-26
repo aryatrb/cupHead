@@ -1,10 +1,13 @@
 package com.example.cuphead.model;
 
+import com.example.cuphead.ViewApplication;
 import com.example.cuphead.realcontroller.GameController;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+
+import java.util.Objects;
 
 public class HitDust extends Transition {
     private static final Image[] IMAGES = new Image[12];
@@ -14,8 +17,9 @@ public class HitDust extends Transition {
 
     static {
         for (int i = 0; i < IMAGES.length; i++)
-            IMAGES[i] = new Image("com/example/assets/boss/hitdust/" +
-                    (i + 1) + ".png");
+            IMAGES[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/boss/hitdust/" +
+                    (i + 1) + ".png")).toExternalForm());
     }
 
     public HitDust(ImageView bulletView) {

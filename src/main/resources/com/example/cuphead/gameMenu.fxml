@@ -10,7 +10,7 @@
       fx:controller="com.example.cuphead.fxcontroller.GameMenuControllerFX">
     <AnchorPane fx:id="pane" VBox.vgrow="ALWAYS">
         <ImageView fx:id="background" fitHeight="800.0" fitWidth="5908.6451">
-            <Image url="@../assets/backgrounds/gameBackground.png"/>
+            <Image url="@assets/backgrounds/gameBackground.png"/>
         </ImageView>
 
     </AnchorPane>

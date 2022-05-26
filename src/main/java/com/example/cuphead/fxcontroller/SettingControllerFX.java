@@ -122,9 +122,13 @@ public class SettingControllerFX implements Initializable {
     }
 
     private void updateDifficultyTexts() {
-        setText(currentDifficultyText, "Current Difficulty: ", "Cup-Head", "PlasticCup-Head", "No-Head");
-        setText(primitiveCupHeadHealthText, "PrimitiveCupHeadHealth: ", "10", "5", "2");
-        setText(gettingDamagedCoefficientText, "GettingDamagedCoefficient: ", "50%", "100%", "150%");
-        setText(makingDamageCoefficientText, "MakingDamageCoefficient: ", "150%", "100%", "50%");
+        setText(currentDifficultyText, "Current Difficulty: ",
+                "Cup-Head", "PlasticCup-Head", "No-Head");
+        setText(primitiveCupHeadHealthText, "PrimitiveCupHeadHealth: ",
+                "10", "5", "2");
+        setText(gettingDamagedCoefficientText, "GettingDamagedCoefficient: ",
+                "50%", "100%", "150%");
+        setText(makingDamageCoefficientText, "MakingDamageCoefficient: ",
+                "150%", "100%", "50%");
     }
 }

@@ -1,5 +1,6 @@
 package com.example.cuphead.model;
 
+import com.example.cuphead.ViewApplication;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,9 +9,12 @@ import com.example.cuphead.realcontroller.GameController;
 import com.example.cuphead.realcontroller.SettingController;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Bullet extends Transition implements Armament {
-    private final static Image IMAGE = new Image("com/example/assets/bullet/bullet.png");
+    private final static Image IMAGE = new Image(Objects
+            .requireNonNull(ViewApplication.class.getResource(
+                    "assets/bullet/bullet.png")).toExternalForm());
     private final ImageView imageView;
 
     public Bullet(int positionX, int positionY) {

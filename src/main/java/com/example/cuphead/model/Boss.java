@@ -1,5 +1,6 @@
 package com.example.cuphead.model;
 
+import com.example.cuphead.ViewApplication;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,6 +9,7 @@ import com.example.cuphead.realcontroller.GameController;
 import com.example.cuphead.realcontroller.SettingController;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,24 +33,31 @@ public class Boss extends Transition implements Armament, HealthyBeing {
     private int phase;
 
     static {
-        for (int i = 0; i < FLY_IMAGES_PHASE_ONE.length; i++)
-            FLY_IMAGES_PHASE_ONE[i] = new Image("com/example/assets/boss/bossFly/" +
-                    (i + 1) + ".png");
+        for (int i = 0; i < FLY_IMAGES_PHASE_ONE.length; i++) {
+            FLY_IMAGES_PHASE_ONE[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/boss/bossFly/" +
+                    (i + 1) + ".png")).toExternalForm());
+        }
         for (int i = 0; i < SHOOT_IMAGES_PHASE_ONE.length; i++)
-            SHOOT_IMAGES_PHASE_ONE[i] = new Image("com/example/assets/boss/bossShoot/" +
-                    (i + 1) + ".png");
+            SHOOT_IMAGES_PHASE_ONE[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/boss/bossShoot/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < FLY_IMAGES_PHASE_TWO.length; i++)
-            FLY_IMAGES_PHASE_TWO[i] = new Image("com/example/assets/boss/phase2/fly/" +
-                    (i + 1) + ".png");
+            FLY_IMAGES_PHASE_TWO[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/boss/phase2/fly/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < SHOOT_IMAGES_PHASE_TWO.length; i++)
-            SHOOT_IMAGES_PHASE_TWO[i] = new Image("com/example/assets/boss/phase2/shoot/" +
-                    (i + 1) + ".png");
+            SHOOT_IMAGES_PHASE_TWO[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/boss/phase2/shoot/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < FLY_IMAGES_PHASE_THREE.length; i++)
-            FLY_IMAGES_PHASE_THREE[i] = new Image("com/example/assets/boss/phase3/fly/" +
-                    (i + 1) + ".png");
+            FLY_IMAGES_PHASE_THREE[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/boss/phase3/fly/" +
+                    (i + 1) + ".png")).toExternalForm());
         for (int i = 0; i < SHOOT_IMAGES_PHASE_THREE.length; i++)
-            SHOOT_IMAGES_PHASE_THREE[i] = new Image("com/example/assets/boss/phase3/shoot/" +
-                    (i + 1) + ".png");
+            SHOOT_IMAGES_PHASE_THREE[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/boss/phase3/shoot/" +
+                    (i + 1) + ".png")).toExternalForm());
     }
 
     public Boss() {

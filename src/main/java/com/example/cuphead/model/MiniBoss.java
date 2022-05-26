@@ -1,5 +1,6 @@
 package com.example.cuphead.model;
 
+import com.example.cuphead.ViewApplication;
 import javafx.animation.Transition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -8,6 +9,7 @@ import com.example.cuphead.realcontroller.GameController;
 import com.example.cuphead.realcontroller.SettingController;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MiniBoss extends Transition implements Armament, HealthyBeing {
     private static final Image[] YELLOW_PHOTO = new Image[6];
@@ -21,12 +23,14 @@ public class MiniBoss extends Transition implements Armament, HealthyBeing {
 
     static {
         for (int i = 0; i < YELLOW_PHOTO.length; i++)
-            YELLOW_PHOTO[i] = new Image("com/example/assets/miniboss/yellow/"
-                    + (i + 1) + ".png");
+            YELLOW_PHOTO[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/miniboss/yellow/"
+                    + (i + 1) + ".png")).toExternalForm());
 
         for (int i = 0; i < PURPLE_PHOTO.length; i++)
-            PURPLE_PHOTO[i] = new Image("com/example/assets/miniboss/purple/"
-                    + (i + 1) + ".png");
+            PURPLE_PHOTO[i] = new Image(Objects.requireNonNull(ViewApplication
+                    .class.getResource("assets/miniboss/purple/"
+                    + (i + 1) + ".png")).toExternalForm());
     }
 
     public MiniBoss(double x, double y, boolean isYellow) {

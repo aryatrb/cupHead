@@ -22,7 +22,8 @@ public class LoginControllerFX implements Initializable {
 
     @FXML
     private void register() {
-        int newUser = com.example.cuphead.realcontroller.LoginController.createNewUser(username.getText(),
+        int newUser = com.example.cuphead.realcontroller
+                .LoginController.createNewUser(username.getText(),
                 password.getText());
         if (newUser == 0) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

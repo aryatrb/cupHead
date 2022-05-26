@@ -1,14 +1,14 @@
 package com.example.cuphead.realcontroller;
 
+import com.example.cuphead.ViewApplication;
 import com.example.cuphead.model.Difficulty;
 import javafx.scene.effect.ColorAdjust;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import java.io.File;
+import java.util.Objects;
 
 public class SettingController {
     private final static ColorAdjust GRAY_SCALE = new ColorAdjust();
@@ -18,6 +18,7 @@ public class SettingController {
     private static boolean isDevilMode;
     private static boolean isSoundOn;
     private static boolean isBW = false;
+
     static {
         GRAY_SCALE.setSaturation(-1);
         COLORFUL.setSaturation(0);
@@ -27,9 +28,8 @@ public class SettingController {
         return difficulty;
     }
 
-    public static void setEffect(Pane pane)
-    {
-        if(isBW)
+    public static void setEffect(Pane pane) {
+        if (isBW)
             pane.setEffect(GRAY_SCALE);
         else pane.setEffect(COLORFUL);
     }
@@ -38,9 +38,10 @@ public class SettingController {
 
         if (mediaPlayer != null)
             mediaPlayer.stop();
-        mediaPlayer = new MediaPlayer(new Media(
-                new File("src/main/resources/com/example/assets/music/" +
-                        string + ".mp3").toURI().toString()));
+        mediaPlayer = new MediaPlayer(new Media(Objects
+                .requireNonNull(ViewApplication
+                        .class.getResource("assets/music/" +
+                        string + ".mp3")).toExternalForm()));
         mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
         mediaPlayer.play();
         if (!SettingController.isIsSoundOn())
